@@ -1,6 +1,5 @@
-
 Don't track content of these folders
-*/.idea
+backend/services/auth/goapi/src/.idea
 
 # Binaries for programs and plugins
 *.exe
