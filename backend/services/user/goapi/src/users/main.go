@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	//"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
+	//"gopkg.in/mgo.v2/bson"
 	"log"
 	http "net/http"
 	. "users/models"
@@ -25,9 +25,11 @@ var dao = UserDatabase{}
 //Get All users
 func GetAllUsers(w http.ResponseWriter, r *http.Request){
 	defer r.Body.Close()
-	var users []User
-	if err := db.C(COLLECTION).Find(bson.M{}).All(&users); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Query")
+
+	users,err := dao.FindAll()
+
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -43,8 +45,13 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	
-	respondWithJson(w, http.StatusCreated, "created")
+	fmt.Print(user.FirstName)
+	retuser,err := dao.CreateUser(user)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, retuser)
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
@@ -60,7 +67,12 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	w.Write(response)
 }
 
+func init() {
+	dao.Database = "cmpe281"
+	dao.Server = "mongodb://cmpe281:cmpe281@192.168.99.100:27017"
 
+	dao.Connect()
+}
 
 func main() {
 	r := mux.NewRouter()
