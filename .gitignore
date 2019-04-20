@@ -1,5 +1,7 @@
 Don't track content of these folders
-backend/services/auth/goapi/src/.idea
+*.idea
+*github.com
+*gopkg.in
 
 # Binaries for programs and plugins
 *.exe
