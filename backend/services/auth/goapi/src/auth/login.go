@@ -82,6 +82,28 @@ func Logout(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
+func WelcomeEndPoint(w http.ResponseWriter, r *http.Request)  {
+	c, err := r.Cookie("session_token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	sessionToken := c.Value
+
+	// get token from db
+	email, sessionExist := getSession(sessionToken)
+	if !sessionExist {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	_, _ = w.Write([]byte(fmt.Sprintf("Welcome %s!", email)))
+}
+
 func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
 }
@@ -107,6 +129,9 @@ func main() {
 	r.HandleFunc("/auth/login", Login).Methods("POST")
 
 	r.HandleFunc("/auth/logout", Logout).Methods("POST")
+
+	// protected end point
+	r.HandleFunc("/auth/welcome", WelcomeEndPoint).Methods("GET")
 
 	if err := http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)
