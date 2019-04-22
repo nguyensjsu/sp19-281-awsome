@@ -1,14 +1,14 @@
-
 package models
-
+//import "gopkg.in/mgo.v2/bson"
 
 type Job struct {
-	title string        `bson:"title" json:"title"`
-	company  string        `bson:"company" json:"company"`
-	description  string        `bson:"description" json:"description"`
-	industry  string        `bson:"industry" json:"industry"`
-	jobType  string        `bson:"jobType" json:"jobType"`
-	function  string        `bson:"function" json:"function"`
-	logo  string        `bson:"logo" json:"logo"`
+	//ID  bson.ObjectId  `bson:"_id,omitempty" json:"id" `
+	Title string        `bson:"title" json:"title"`
+	Company  string        `bson:"company" json:"company"`
+	Description  string        `bson:"description" json:"description"`
+	Industry  string        `bson:"industry" json:"industry"`
+	JobType  string        `bson:"jobType" json:"jobType"`
+	Function  string        `bson:"function" json:"function"`
+	Logo  string        `bson:"logo" json:"logo"`
 
 }
