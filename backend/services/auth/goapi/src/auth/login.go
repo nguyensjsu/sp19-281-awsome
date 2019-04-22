@@ -15,6 +15,22 @@ func PingEndPoint(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintln(w, "Login API is alive!")
 }
 
+func SignUp(w http.ResponseWriter, r *http.Request)  {
+	defer r.Body.Close()
+	var user models.User
+	// Get json body
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	if !addUser(user) {
+		respondWithError(w, http.StatusBadRequest, "user exists")
+	} else {
+		respondWithJson(w, http.StatusOK, "user added!")
+	}
+}
+
 func Login(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var user models.User
@@ -66,6 +82,8 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
+
+	r.HandleFunc("/auth/signup", SignUp).Methods("POST")
 
 	r.HandleFunc("/auth/login", Login).Methods("POST")
 
