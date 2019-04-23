@@ -13,6 +13,16 @@ The application will implement the following APIs:
     * Get User by ID
     * Get all Users
 4. Jobs
-    * Add Job
+    * Add Job 
     * Get a job by ID
     * Get all Jobs 
+
+### Jobs API:
+```
+/ping -> "GET"
+/job  -> "POST"
+/jobs -> "GET"
+/job/:id -> "GET"
+
+```
+
