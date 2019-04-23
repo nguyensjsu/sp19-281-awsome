@@ -35,6 +35,13 @@ func (m *JobDatabase) FindAll() ([]Job, error) {
 	return jobs, err
 }
 
+// Find a job by ID param
+func (m *JobDatabase) FindById(id string) (Job, error) {
+	var job Job
+	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&job)
+	return job, err
+}
+
 // Create a Job
 func (m *JobDatabase) CreateJob(job Job) (Job, error) {
 	fmt.Print("Creating Job: ")

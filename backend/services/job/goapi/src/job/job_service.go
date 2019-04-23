@@ -27,13 +27,26 @@ func GetAllJobs(w http.ResponseWriter, r *http.Request){
 	jobs,err := dao.FindAll()
 
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, err.Error())
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	respondWithJson(w,http.StatusOK, jobs)
 }
 
+//Get job with ID
+func GetJobWithID(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+
+	params := mux.Vars(r)
+	fmt.Println(params["id"])
+	job, err := dao.FindById(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, job)
+}
 
 // POST /create/job : Create a Job
 func CreateJob(w http.ResponseWriter, r *http.Request) {
@@ -75,8 +88,9 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
-	r.HandleFunc("/create/job", CreateJob).Methods("POST")
-	r.HandleFunc("/getJobs", GetAllJobs).Methods("GET")
+	r.HandleFunc("/jobs", CreateJob).Methods("POST")
+	r.HandleFunc("/jobs", GetAllJobs).Methods("GET")
+	r.HandleFunc("/jobs/{id}", GetAllJobs).Methods("GET")
 	
 	if err := http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)
