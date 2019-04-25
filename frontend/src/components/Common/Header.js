@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
-import { connect } from "react-redux";
 import HeaderImage from '../Files/Images/profile-placeholder.png';
-import fetchProfile from '../../actions/profile';
-import { withRouter } from "react-router";
+import { Redirect,withRouter } from "react-router";
 import ReactAutocomplete from "react-autocomplete";
-import Autocomplete from "react-autocomplete";
-import { api , printError, printMessage} from '../../services/';
+//import { api , printError, printMessage} from '../../services/';
 import profileplaceholder from '../Files/Images/profile-placeholder.png'
-import { IMAGE_PATHS, S3_URL } from "../../constants/routes";
+//import { IMAGE_PATHS, S3_URL } from "../../constants/routes";
 
 
-class Header extends Component {
+class Header extends React.Component {
 
   constructor(props)
   {
@@ -31,7 +28,7 @@ class Header extends Component {
 	  this.openPublicSearchProfile = this.openPublicSearchProfile.bind(this);
 	  this.deleteProfile =  this.deleteProfile.bind(this);
 	  this.handlelogout = this.handlelogout.bind(this);
-	  console.log(this.props);
+	  console.log("props : ", this.props);
 
 
 
@@ -46,15 +43,15 @@ class Header extends Component {
 
   componentDidMount()
   {
-
-		this.props.dispatch(fetchProfile());
+		//Get User Details
+		//this.props.dispatch(fetchProfile());
 
 		/******CHECK FOR APPLICANT LOGIN *********/
 
 		let user = sessionStorage.getItem('user_id');
 		let profile = sessionStorage.getItem('profile');
 		let user_token = sessionStorage.getItem('user_token');
-		if(profile != 'applicant' || !user || !user_token)
+		if(profile != 'applicant')
 		{
 			this.props.history.push("/");
 		}
@@ -66,31 +63,31 @@ class Header extends Component {
   componentWillReceiveProps(nextProps)
   {
 	  //console.log("HEADER PROPS");
-	  //console.log(nextProps);	  
-	  try 
+	  //console.log(nextProps);
+	  try
 	  {
 			  let data = nextProps.user_profile.user_profile.user;
 			  console.log(data);
 			if(data)
 			{
-				console.log(data.userimage);
-				if(!data.profile_image)
-				{
-					data.profile_image = HeaderImage;
-				}
-				if((data["profile_image"]).indexOf("https://")!=-1)
-				{
-					//alert("es");
-					let s = data["profile_image"].split("/").pop();
-					console.log(s);
-					let ts = S3_URL + s;
-					data["profile_image"] = ts;
-				}
-				else 
-				{
-					data["profile_image"] =  S3_URL + data["profile_image"];
-				}
-				//alert(data.profile_image);
+				// console.log(data.userimage);
+				// if(!data.profile_image)
+				// {
+				// 	data.profile_image = HeaderImage;
+				// }
+				// if((data["profile_image"]).indexOf("https://")!=-1)
+				// {
+				// 	//alert("es");
+				// 	let s = data["profile_image"].split("/").pop();
+				// 	console.log(s);
+				// 	let ts = S3_URL + s;
+				// 	data["profile_image"] = ts;
+				// }
+				// else
+				// {
+				// 	data["profile_image"] =  S3_URL + data["profile_image"];
+				// }
+				// //alert(data.profile_image);
 
 				this.setState({
 					'username' : (data.name.first + " " +  data.name.last),
@@ -154,58 +151,58 @@ class Header extends Component {
 			"name" : e.target.value
 		}
 		try {
-			let ret = await api('POST','/search/users',data);
-			console.log(ret);
-			if(ret.status>=200 && ret.status<300)
-			{
-				let temparray = [];
-				
-				for(let k = 0 ; k < (ret['data']['payLoad'].length>5?5:ret['data']['payLoad'].length) ; k++ )
-				{
-					let currentObj = ret['data']['payLoad'][k];
-					let temp =  {
-						'userimage' : '',
-						'label' : '',
-						'membersince' : '',
-						'userid' :'',
-					};
-					
-					let keys = Object.keys(currentObj);
-					if(keys.indexOf('profile_image')!=-1)
-					{
-						if(currentObj['profile_image'])
-						{
-							temp.userimage = currentObj['profile_image']
-						}
-						else 
-						{
-							temp.userimage =  profileplaceholder;
-						}
-					}
-					else 
-					{
-						temp.userimage =  profileplaceholder;
-					}
-					temp.label = currentObj['name']['first'] + " " + currentObj['name']['last'];
-					temp.lastname = '';
-					temp.membersince = '';
-					temp.userid = currentObj['id'];
-					temparray.push(temp);
-				}
-				this.setState({
-					searchResults : temparray
-				});
-				console.log(this.state);
-			}
-			else 
-			{
-				throw "error";
-			}
+			//Write code for search
+			// let ret = await api('POST','/search/users',data);
+			// console.log(ret);
+			// if(ret.status>=200 && ret.status<300)
+			// {
+			// 	let temparray = [];
+			//
+			// 	for(let k = 0 ; k < (ret['data']['payLoad'].length>5?5:ret['data']['payLoad'].length) ; k++ )
+			// 	{
+			// 		let currentObj = ret['data']['payLoad'][k];
+			// 		let temp =  {
+			// 			'userimage' : '',
+			// 			'label' : '',
+			// 			'membersince' : '',
+			// 			'userid' :'',
+			// 		};
+			//
+			// 		let keys = Object.keys(currentObj);
+			// 		if(keys.indexOf('profile_image')!=-1)
+			// 		{
+			// 			if(currentObj['profile_image'])
+			// 			{
+			// 				temp.userimage = currentObj['profile_image']
+			// 			}
+			// 			else
+			// 			{
+			// 				temp.userimage =  profileplaceholder;
+			// 			}
+			// 		}
+			// 		else
+			// 		{
+			// 			temp.userimage =  profileplaceholder;
+			// 		}
+			// 		temp.label = currentObj['name']['first'] + " " + currentObj['name']['last'];
+			// 		temp.lastname = '';
+			// 		temp.membersince = '';
+			// 		temp.userid = currentObj['id'];
+			// 		temparray.push(temp);
+			// 	}
+			// 	this.setState({
+			// 		searchResults : temparray
+			// 	});
+			// 	console.log(this.state);
+			// }
+			// else
+			// {
+			// 	throw "error";
+			// }
 		  } 
 		  catch (error) 
 		  {
 			console.log(Object.keys(error), error.response);
-			printError(error);
 		  }
 	  }
   }
@@ -218,15 +215,16 @@ class Header extends Component {
 		  {
 			try 
 			{
-				let userid = sessionStorage.getItem('user_id');
-				let ret = await api('DELETE',('/users/'+userid));
-				console.log(ret);
-				if(ret.status>=200 && ret.status<300)
-				{
-					sessionStorage.clear();
-					localStorage.clear();
-					this.props.history.push("/");
-				}
+				//Write code for delete
+				// let userid = sessionStorage.getItem('user_id');
+				// let ret = await api('DELETE',('/users/'+userid));
+				// console.log(ret);
+				// if(ret.status>=200 && ret.status<300)
+				// {
+				// 	sessionStorage.clear();
+				// 	localStorage.clear();
+				// 	this.props.history.push("/");
+				// }
 			}
 			catch(e)
 			{
@@ -295,7 +293,7 @@ class Header extends Component {
 									style={{ backgroundColor: highlighted ? '#FFF' : '#FFF',padding : '10px','cursor' : 'pointer'}}
 								>
 									<span id={item.userid} className="user-image">
-										<img src={S3_URL+item.userimage}  className="search-user-image" />
+										<img className="search-user-image" />
 									</span>
 									<span className="search-firstname">{item.label}</span>
 									<span className="search-lastname">{item.lastname}</span>
@@ -328,7 +326,7 @@ class Header extends Component {
 								</Link>
 							</li>
 							<li>
-									<Link to="/applicantconnection">
+									<Link to="/mynetwork">
 										<div>
 											<i className="fa fa-user-friends header-icons"></i>
 										</div>
@@ -336,12 +334,20 @@ class Header extends Component {
 									</Link>
 								</li>
 							<li>
-									<Link to= "/jobshome">
+								{ (sessionStorage.getItem('profile') == 'applicant') && <Link to= "/jobshome">
 										<div>
 											<i className="fa fa-briefcase header-icons"></i>
 										</div>
 										Jobs
 									</Link>
+								}
+                                { (sessionStorage.getItem('profile') == 'recruiter') && <Link to="/postedjobs">
+                                    <div>
+                                        <i className="fa fa-briefcase header-icons" />
+                                    </div>
+                                    Post Jobs
+                                </Link>
+                                }
 							</li>
 							<li>
 									<a href="#" title="">
@@ -352,128 +358,13 @@ class Header extends Component {
 									</a>
 							</li>
 							<li>
-									<Link to="/message">
+                                <a href="#" title="">
 										<div>
 											<i className="fa fa-comment-alt header-icons"></i>
 										</div>
 										Messaging
-									</Link>
+                                </a>
 							</li>
-							{/* <!--<li>
-								<a href="profiles.html" title="">
-									<span><img src="images/icon4.png" alt=""></span>
-									Profiles
-								</a>
-								<ul>
-									<li><a href="user-profile.html" title="">User Profile</a></li>
-									<li><a href="my-profile-feed.html" title="">my-profile-feed</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="jobs.html" title="">
-									<span><img src="images/icon5.png" alt=""></span>
-									Jobs
-								</a>
-							</li>
-							<li>
-								<a href="#" title="" className="not-box-open">
-									<span><img src="images/icon6.png" alt=""></span>
-									Messages
-								</a>
-								<div className="notification-box msg">
-									<div className="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
-									</div>
-									<div className="nott-list">
-										<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img1.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="messages.html" title="">Jassica William</a> </h3>
-							  					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				</div>
-						  				<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img2.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="messages.html" title="">Jassica William</a></h3>
-							  					<p>Lorem ipsum dolor sit amet.</p>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				</div>
-						  				<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img3.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="messages.html" title="">Jassica William</a></h3>
-							  					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo incididunt ut labore et dolore magna aliqua.</p>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				</div>
-						  				<div className="view-all-nots">
-						  					<a href="messages.html" title="">View All Messsages</a>
-						  				</div>
-									</div> 
-								</div>
-							</li>
-							<li>
-								<a href="#" title="" className="not-box-open">
-									<span><img src="images/icon7.png" alt=""></span>
-									Notification
-								</a>
-								<div className="notification-box">
-									<div className="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
-									</div>
-									<div className="nott-list">
-										<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img1.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div>
-						  				</div>
-						  				<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img2.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img3.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				</div>
-						  				<div className="notfication-details">
-							  				<div className="noty-user-img">
-							  					<img src="images/resources/ny-img2.png" alt="">
-							  				</div>
-							  				<div className="notification-info">
-							  					<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-							  					<span>2 min ago</span>
-							  				</div> 
-						  				</div>
-						  				<div className="view-all-nots">
-						  					<a href="#" title="">View All Notification</a>
-						  				</div>
-									</div> 
-								</div> 
-							</li>--> */}
 						</ul>
 					</nav>
 					<div className="menu-btn">
@@ -515,17 +406,7 @@ class Header extends Component {
     )
   }
 }
-//export default Header;
 
-function mapStateToProps(state) {
-    console.log("in map state details profileVIEW",state);
-    return state;
-  //  return { property_detail: state.fetch_details_view.property_detail,
-  //  };
-  }
-  
-  export default withRouter(connect(
-    mapStateToProps
-  )(Header));
+export default withRouter(Header);
   
   

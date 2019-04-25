@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Header from "../Common/Header"
 // import JobsByskill from "../Jobs/JobsBySkill";
 import "./Home.css"
-import { api, printError, printMessage } from '../../services';
+//import { api, printError, printMessage } from '../../services';
 import {Link} from 'react-router-dom';
-import { IMAGE_PATHS, S3_URL } from "../../constants/routes";
+//import { IMAGE_PATHS, S3_URL } from "../../constants/routes";
 
 
 
@@ -26,6 +26,8 @@ class ApplicantHome extends Component {
 	async componentDidMount(){
 		if(sessionStorage.getItem('user_id')){
 		try {
+			// write code to fetch user details
+			/*
 			let user= await api('GET','/users/'+sessionStorage.getItem('user_id'));
 			console.log("user",user);
 
@@ -43,10 +45,10 @@ class ApplicantHome extends Component {
 			  user_profile_image:user.data.payLoad.user.profile_image
 
 			  
-			})
+			})*/
 		  } catch (error) {
 			console.log(Object.keys(error), error.response);
-			printError(error);
+			//printError(error);
 		  }
 		}else{
 			return;
@@ -54,6 +56,7 @@ class ApplicantHome extends Component {
 	
 		if(sessionStorage.getItem('user_id')){
 		try {
+					/*
 					let ret = await api('GET','/users/'+sessionStorage.getItem('user_id')+'/connections');
 					console.log("connections",ret);
 					this.setState({
@@ -69,10 +72,10 @@ class ApplicantHome extends Component {
       		console.log(datax);
 					setTimeout(() => {
 						window.graph2P(datax['data']);
-					},70);
+					},70);*/
 		  } catch (error) {
 			console.log(Object.keys(error), error.response);
-			printError(error);
+			//printError(error);
 		  }
 		}else{
 			return;

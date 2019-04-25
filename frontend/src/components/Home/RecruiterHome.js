@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import RecruiterHeader from "../Common/RecruiterHeader"
-import JobsByskill from "../Jobs/JobsBySkill";
+import RecruiterHeader from "../Common/Header"
+//import JobsByskill from "../Jobs/JobsBySkill";
 import "./Home.css";
-import { api, printError, printMessage } from "../../services/";
+//import { api, printError, printMessage } from "../../services/";
 
 class ApplicantHome extends Component {
 
@@ -22,19 +22,20 @@ class ApplicantHome extends Component {
   async getData()
   {
     try {
-      let datax = await api("GET", '/users/dashboard');
-      console.log(datax);
-      /* let datax = {
-        "payLoad": 
-      }; */
-      setTimeout(() => {
-        window.graph1P(datax['data']);
-      },70);
+        //Write relevant code
+      // let datax = await api("GET", '/users/dashboard');
+      // console.log(datax);
+      // /* let datax = {
+      //   "payLoad":
+      // }; */
+      // setTimeout(() => {
+      //   window.graph1P(datax['data']);
+      // },70);
   } 
   catch (error) 
   {
     console.log(Object.keys(error), error.response);
-    printError(error);
+    //printError(error);
   }
   }
 

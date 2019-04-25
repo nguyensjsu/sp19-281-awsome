@@ -3,7 +3,7 @@ import Header from "../Common/Header";
 import {Link} from "react-router-dom";
 
 
-class Profile extends Component
+class UserJobs extends Component
 {
     constructor(props)
     {
@@ -22,7 +22,7 @@ class Profile extends Component
                             <div className="row">
 
                                 <div className="col-lg-9 col-md-8 no-pd">
-                                    My Profile
+                                    UserJobs
                                 </div>
                             </div>
                         </div>
@@ -33,4 +33,4 @@ class Profile extends Component
     }
 }
 
-export default Profile;
+export default UserJobs;
