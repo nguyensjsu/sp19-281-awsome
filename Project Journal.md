@@ -20,9 +20,17 @@ The application will implement the following APIs:
 ### Jobs API:
 ```
 /ping -> "GET"
-/job  -> "POST"
+/jobs  -> "POST"
 /jobs -> "GET"
-/job/:id -> "GET"
+/job/{id} -> "GET"
+
+```
+### Users API:
+```
+/ping -> "GET"
+/users -> "POST"
+/users -> "GET"
+/users/{id} -> "GET"
 
 ```
 
