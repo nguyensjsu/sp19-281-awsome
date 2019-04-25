@@ -16,21 +16,21 @@ The application will implement the following APIs:
     * Add Job 
     * Get a job by ID
     * Get all Jobs 
-
+```
 ### Jobs API:
 ```
-/ping -> "GET"
-/jobs  -> "POST"
-/jobs -> "GET"
-/job/{id} -> "GET"
+- /ping -> "GET"
+- /jobs  -> "POST"
+- /jobs -> "GET"
+- /job/{id} -> "GET"
 
 ```
 ### Users API:
 ```
-/ping -> "GET"
-/users -> "POST"
-/users -> "GET"
-/users/{id} -> "GET"
+- /ping -> "GET"
+- /users -> "POST"
+- /users -> "GET"
+- /users/{id} -> "GET"
 
 ```
 
