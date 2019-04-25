@@ -3,8 +3,8 @@ package models
 
 
 type User struct {
-	email string        `bson:"email" json:"email"`
-	password  string        `bson:"password" json:"password"`
+	Email    string `bson:"email" json:"email"`
+	Password string `bson:"password" json:"password"`
 }
 
 

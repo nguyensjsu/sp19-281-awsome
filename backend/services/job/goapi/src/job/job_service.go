@@ -5,18 +5,64 @@ import (
 	"fmt"
 	"log"
 	http "net/http"
-	. "auth/models"
+	. "job/models"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	. "job/DAO"
 )
 
+
+//Test Status of the API
 func PingEndPoint(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Job API is alive!")
+	fmt.Fprintln(w, "Jobs API is alive!")
 }
 
-// POST /job/getAllJobs : get all jobs
-func getAllJobs(w http.ResponseWriter, r *http.Request) {
-	
+var dao = JobDatabase{}
+
+
+//Get All jobs
+func GetAllJobs(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+
+	jobs,err := dao.FindAll()
+
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+
+	respondWithJson(w,http.StatusOK, jobs)
+}
+
+//Get job with ID
+func GetJobWithID(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+
+	params := mux.Vars(r)
+	fmt.Println(params["id"])
+	job, err := dao.FindById(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, job)
+}
+
+// POST /create/job : Create a Job
+func CreateJob(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var job Job
+	if err := json.NewDecoder(r.Body).Decode(&job); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	fmt.Print(job.Title)
+	retjob,err := dao.CreateJob(job)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, retjob)
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
@@ -32,12 +78,19 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	w.Write(response)
 }
 
+func init() {
+	dao.Database = "cmpe281"
+	dao.Server = "mongodb://cmpe281:cmpe281@3.89.47.220:27017"
 
+	dao.Connect()
+}
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
-	r.HandleFunc("/job/getAllJobs", Login).Methods("POST")
+	r.HandleFunc("/jobs", CreateJob).Methods("POST")
+	r.HandleFunc("/jobs", GetAllJobs).Methods("GET")
+	r.HandleFunc("/jobs/{id}", GetAllJobs).Methods("GET")
 	
 	if err := http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)

@@ -2,7 +2,7 @@
 all: clean
 
 clean: 
-	find . -name 'goapi' -type f -exec rm -f {} \; 
+	find . -name 'search' -type f -exec rm -f {} \;
 	go clean
 
 run:
@@ -12,16 +12,16 @@ main:
 	go run src/app/main.go
 
 format:
-	go fmt goapi
+	go fmt search
 
 install:
-	go install goapi
+	go install search
 
 build:
-	go build goapi
+	go build search
 
 start:
-	./goapi 
+	./search
 
 test-ping:
 	curl localhost:3000/ping
@@ -30,11 +30,11 @@ test-gumball:
 	curl localhost:3000/gumball
 
 docker-build: 
-	docker build -t goapi .
+	docker build -t search .
 	docker images
 
 docker-run:
-	docker run --name goapi -td -p 3000:3000 goapi
+	docker run --name search -td -p 3000:3000 search
 	docker ps
 
 docker-network:
@@ -44,12 +44,12 @@ docker-network-inspect:
 	docker network inspect host
 
 docker-shell:
-	docker exec -it goapi bash 
+	docker exec -it search bash
 
 docker-clean:
-	docker stop goapi
-	docker rm goapi
-	docker rmi goapi
+	docker stop search
+	docker rm search
+	docker rmi search
 
 docker-ip:
 	docker-machine ip

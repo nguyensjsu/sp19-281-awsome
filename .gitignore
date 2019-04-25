@@ -9,6 +9,7 @@ Don't track content of these folders
 *.dll
 *.so
 *.dylib
+*.a
 
 # Test binary, built with `go test -c`
 *.test
