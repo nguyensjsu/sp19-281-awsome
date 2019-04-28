@@ -54,6 +54,24 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, retuser)
 }
 
+// POST /create/user : Testing Login
+func TestLogin(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var login Login
+
+	if err := json.NewDecoder(r.Body).Decode(&login); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	fmt.Print(login.Email)
+	//if err != nil {
+	//	respondWithError(w, http.StatusBadRequest, err.Error())
+	//	return
+	//}
+	var user =	 User {"test","Dharma","Dheeraj","applicant"}
+	respondWithJson(w, http.StatusOK, user)
+}
+
 func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
 }
@@ -68,10 +86,10 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 func init() {
-	dao.Database = "cmpe281"
-	dao.Server = "mongodb://cmpe281:cmpe281@192.168.99.100:27017"
-
-	dao.Connect()
+	//dao.Database = "cmpe281"
+	//dao.Server = "mongodb://cmpe281:cmpe281@192.168.99.100:27017"
+	//
+	//dao.Connect()
 }
 
 func main() {
@@ -79,8 +97,9 @@ func main() {
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
 	r.HandleFunc("/create/user", CreateUser).Methods("POST")
 	r.HandleFunc("/getUsers", GetAllUsers).Methods("GET")
+	r.HandleFunc("/auth/login", TestLogin).Methods("POST")
 	
-	if err := http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
+	if err := http.ListenAndServe(":9000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)
 	}
 }
