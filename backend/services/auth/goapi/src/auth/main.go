@@ -1,7 +1,9 @@
 package main
 
 import (
+	"./db"
 	"./models"
+	userManager "./user"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/handlers"
@@ -24,7 +26,7 @@ func SignUp(w http.ResponseWriter, r *http.Request)  {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if !addUser(user) {
+	if !userManager.AddUser(user) {
 		respondWithError(w, http.StatusBadRequest, "user exists")
 	} else {
 		respondWithJson(w, http.StatusOK, "user added!")
@@ -40,9 +42,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if validateUser(user) {
+	if userManager.ValidateUser(user) {
 		// generate session token
-		sessionToken := addSession(user.Email)
+		sessionToken := userManager.AddSession(user)
 
 		// set cookie with 1 hour time-out
 		http.SetCookie(w, &http.Cookie{
@@ -76,9 +78,9 @@ func Logout(w http.ResponseWriter, r *http.Request)  {
 	sessionToken := c.Value
 
 	// get token from db
-	_, sessionExist := getSession(sessionToken)
+	_, sessionExist := userManager.GetSession(sessionToken)
 	if sessionExist {
-		invaliateSession(sessionToken)
+		userManager.InvalidateSession(sessionToken)
 	}
 }
 
@@ -95,13 +97,13 @@ func WelcomeEndPoint(w http.ResponseWriter, r *http.Request)  {
 	sessionToken := c.Value
 
 	// get token from db
-	email, sessionExist := getSession(sessionToken)
+	session, sessionExist := userManager.GetSession(sessionToken)
 	if !sessionExist {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	_, _ = w.Write([]byte(fmt.Sprintf("Welcome %s!", email)))
+	_, _ = w.Write([]byte(fmt.Sprintf("Welcome %s!", session.Email)))
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
@@ -120,6 +122,9 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
 
 func main() {
+
+	db.ConfigMongoDB()
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
@@ -133,7 +138,7 @@ func main() {
 	// protected end point
 	r.HandleFunc("/auth/welcome", WelcomeEndPoint).Methods("GET")
 
-	if err := http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
+	if err := http.ListenAndServe(":8080", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)
 	}
 }

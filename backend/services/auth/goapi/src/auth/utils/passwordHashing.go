@@ -1,13 +1,13 @@
-package main
+package utils
 
 import "golang.org/x/crypto/bcrypt"
 
-func compareHash(inputPassword string, dbPasswordHash string) bool {
+func CompareHash(inputPassword string, dbPasswordHash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(dbPasswordHash), []byte(inputPassword))
 	return err == nil
 }
 
-func getPasswordHash(inputPassword string) string {
+func GetPasswordHash(inputPassword string) string {
 	passwordBytes := []byte(inputPassword)
 
 	// Hashing the password with the default cost of 10
