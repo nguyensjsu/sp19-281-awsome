@@ -39,16 +39,16 @@
 ```
 ## Design Principles:
 ### AKF Scaling Cube
-* **Scaling With X-Axis** - 
-* **Scaling With Y-Axis** - 
-* **Scaling With Z-Axis** - 
+* **Scaling With X-Axis** - Horizontal Scaling using ELBs and multiple servers for each service.
+* **Scaling With Y-Axis** - MicroService Architecture comprising of 4 replicated services running independently.
+* **Scaling With Z-Axis** - The system uses sharded MongoDB databases for each service.
 
 ### CAP Principle: 
 
 ## Technology :
 * **BackEnd** - GoLang 
-* **Cloud Services** - Amazon EC2, API Gateway, Network Load Balancer 
+* **Cloud Services** - Amazon EC2, API Gateway, Network Load Balancer, Elastic Load Balancer
 * **Data Store** - MongoDB, Redis for cache. 
-* **FrontEnd** - React,Redux HTML5, CSS
+* **FrontEnd** - React,Redux, HTML5, CSS
 
 
