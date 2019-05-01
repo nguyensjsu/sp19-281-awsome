@@ -4,7 +4,7 @@
 * Decided to build a clone of LinkedIn Application.
 * Discussed the architecture and flow of the application.
 * Discussed services required for application backend.
-* Decided to implement following Microservices and each team member was assigned one services:\
+* Decided to implement following Microservices and each team member was assigned one service:\
    **Auth** \
    **Users** \
    **Jobs** \
