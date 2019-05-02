@@ -6,14 +6,19 @@ import (
 	"../utils"
 )
 
-func ValidateUser(user models.User) bool {
+func ValidateUser(user models.User) (bool, models.User) {
 
 	dbUser, userExist := db.GetUserByEmail(user.Email)
 	if !userExist {
-		return false
+		return false, models.User{}
 	}
 
-	return utils.CompareHash(user.Password, dbUser.Password)
+	validUser := utils.CompareHash(user.Password, dbUser.Password)
+
+	// mask password
+	dbUser.Password = "***"
+
+	return validUser, dbUser
 }
 
 func AddUser(user models.User) bool {

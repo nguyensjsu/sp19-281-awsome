@@ -4,7 +4,6 @@ import (
 	"../models"
 	"context"
 	"fmt"
-	uuid "github.com/satori/go.uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -79,36 +78,36 @@ func GetUserByEmail(email string) (models.User, bool) {
 	return user, userExist
 }
 
-func AddToken(user models.User) string {
-	newToken, _ := uuid.NewV4()
-	coll := db.Collection("active_sessions")
-	session := models.Session{
-		CreatedAt: time.Now(),
-		SessionId: newToken.String(),
-		Email: user.Email,
-		Role: user.Role }
-	_, err := coll.InsertOne(context.Background(), session)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return newToken.String()
-}
+//func AddToken(user models.User) string {
+//	newToken, _ := uuid.NewV4()
+//	coll := db.Collection("active_sessions")
+//	session := models.Session{
+//		CreatedAt: time.Now(),
+//		SessionId: newToken.String(),
+//		Email: user.Email,
+//		Role: user.Role }
+//	_, err := coll.InsertOne(context.Background(), session)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	return newToken.String()
+//}
 
-func GetToken(token string) (models.Session, bool) {
-	var session models.Session
-	sessionExist := true
-	coll := db.Collection("active_sessions")
-	err := coll.FindOne(context.Background(), bson.M{"sessionId": token}).Decode(&session)
-	if err != nil {
-		sessionExist = false
-	}
-	return session, sessionExist
-}
-
-func DeleteToken(token string)  {
-	coll := db.Collection("active_sessions")
-	_, err := coll.DeleteOne(context.Background(), bson.M{"sessionId": token})
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+//func GetToken(token string) (models.Session, bool) {
+//	var session models.Session
+//	sessionExist := true
+//	coll := db.Collection("active_sessions")
+//	err := coll.FindOne(context.Background(), bson.M{"sessionId": token}).Decode(&session)
+//	if err != nil {
+//		sessionExist = false
+//	}
+//	return session, sessionExist
+//}
+//
+//func DeleteToken(token string)  {
+//	coll := db.Collection("active_sessions")
+//	_, err := coll.DeleteOne(context.Background(), bson.M{"sessionId": token})
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//}

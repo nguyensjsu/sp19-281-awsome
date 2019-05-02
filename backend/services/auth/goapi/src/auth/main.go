@@ -42,9 +42,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if userManager.ValidateUser(user) {
+	validUser, dbUser := userManager.ValidateUser(user)
+	if validUser {
 		// generate session token
-		sessionToken := userManager.AddSession(user)
+		sessionToken := userManager.AddSession(dbUser)
 
 		// set cookie with 1 hour time-out
 		http.SetCookie(w, &http.Cookie{
@@ -124,6 +125,8 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 func main() {
 
 	db.ConfigMongoDB()
+
+	db.ConfigRedis()
 
 	r := mux.NewRouter()
 
