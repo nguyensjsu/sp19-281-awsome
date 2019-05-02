@@ -77,9 +77,9 @@ func getParsedSubject(jwt string) (bool, models.Token) {
 		headers := splitToken[1]+"=="
 		decodedHeader, err := base64.StdEncoding.DecodeString(headers)
 		fmt.Println(string(decodedHeader))
-		if err != nil {
-			return false, token
-		}
+		//if err != nil {
+		//	return false, token
+		//}
 		err = json.Unmarshal(decodedHeader, &token)
 		if err != nil {
 			return false, token
