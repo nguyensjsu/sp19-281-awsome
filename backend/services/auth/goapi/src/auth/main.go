@@ -4,13 +4,13 @@ import (
 	"./db"
 	"./models"
 	userManager "./user"
+	"./utils"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	"time"
 )
 
 func PingEndPoint(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +29,15 @@ func SignUp(w http.ResponseWriter, r *http.Request)  {
 	if !userManager.AddUser(user) {
 		respondWithError(w, http.StatusBadRequest, "user exists")
 	} else {
-		respondWithJson(w, http.StatusOK, "user added!")
+		signupResponse := models.SignupResponse{}
+		// Account
+		signupResponse.Account = models.UserAccount{}
+		signupResponse.Account.Email = user.Email
+		signupResponse.Account.Role = user.Role
+		// Details
+		signupResponse.Details = models.UserDetails{}
+		signupResponse.Details.Name = user.Name
+		respondWithJson(w, http.StatusOK, signupResponse)
 	}
 }
 
@@ -43,68 +51,35 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	validUser, dbUser := userManager.ValidateUser(user)
-	if validUser {
-		// generate session token
-		sessionToken := userManager.AddSession(dbUser)
-
-		// set cookie with 1 hour time-out
-		http.SetCookie(w, &http.Cookie{
-			Name:    "session_token",
-			Value:   sessionToken,
-			Expires: time.Now().Add(60 * 60 * time.Second),
-		})
-
-	} else {
+	if !validUser {
 		respondWithError(w, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	var jwt = utils.CreateJWT(dbUser)
+	var response models.LoginResponse
+	response.Token = jwt
+	response.Message = "ok"
 
-	var token models.Token
-	token.Sub = "test"
-	token.Role = "test"
-	
-	respondWithJson(w, http.StatusOK, token)
+	respondWithJson(w, http.StatusOK, response)
 }
 
 func Logout(w http.ResponseWriter, r *http.Request)  {
-	c, err := r.Cookie("session_token")
-	if err != nil {
-		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	sessionToken := c.Value
-
-	// get token from db
-	_, sessionExist := userManager.GetSession(sessionToken)
-	if sessionExist {
-		userManager.InvalidateSession(sessionToken)
+	authHeader :=  r.Header.Get("Authorization")
+	if utils.InValidateJWT(authHeader) {
+		_, _ = w.Write([]byte(fmt.Sprintf("Logout successful!")))
+	} else {
+		_, _ = w.Write([]byte(fmt.Sprintf("Session Not found!")))
 	}
 }
 
 func WelcomeEndPoint(w http.ResponseWriter, r *http.Request)  {
-	c, err := r.Cookie("session_token")
-	if err != nil {
-		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	sessionToken := c.Value
-
-	// get token from db
-	session, sessionExist := userManager.GetSession(sessionToken)
-	if !sessionExist {
+	authHeader :=  r.Header.Get("Authorization")
+	if !utils.ValidateJWT(authHeader) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	_, _ = w.Write([]byte(fmt.Sprintf("Welcome %s!", session.Email)))
+	_, _ = w.Write([]byte(fmt.Sprintf("Welcome!")))
 }
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {

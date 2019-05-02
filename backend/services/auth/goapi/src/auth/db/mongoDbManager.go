@@ -1,8 +1,8 @@
 package db
 
 import (
+	"../config"
 	"../models"
-	"../utils"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
@@ -15,7 +15,7 @@ import (
 var db *mongo.Database = nil
 
 func ConfigMongoDB() {
-	client, err := mongo.NewClient(options.Client().ApplyURI(utils.GetMongoUri()))
+	client, err := mongo.NewClient(options.Client().ApplyURI(config.GetMongoUri()))
 
 	if err != nil {
 		log.Fatal(err)

@@ -1,8 +1,8 @@
 package db
 
 import (
+	"../config"
 	"../models"
-	"../utils"
 	"fmt"
 	"github.com/go-redis/redis"
 	uuid "github.com/satori/go.uuid"
@@ -13,7 +13,7 @@ var redisClient *redis.Client = nil
 
 func ConfigRedis()  {
 	redisClient = redis.NewClient(&redis.Options{
-		Addr:     utils.GetRedisUri(),
+		Addr:     config.GetRedisUri(),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -28,33 +28,23 @@ func ConfigRedis()  {
 
 func AddToken(user models.User) string {
 	newToken, _ := uuid.NewV4()
-	session := models.Session{
-		CreatedAt: time.Now(),
-		SessionId: newToken.String(),
-		Email: user.Email,
-		Role: user.Role }
-
-	err := redisClient.Set(newToken.String(), utils.ToGOB64(session), time.Hour).Err()
+	err := redisClient.Set(user.Email, newToken.String(), time.Hour).Err()
 	if err != nil {
 		panic(err)
 	}
-
 	return newToken.String()
 }
 
-func GetToken(token string) (models.Session, bool) {
-	var session models.Session
+func GetToken(userEmail string) (string, bool) {
 	sessionExist := true
 
-	cacheValue, err := redisClient.Get(token).Result()
+	cacheValue, err := redisClient.Get(userEmail).Result()
 	if err == redis.Nil {
 		sessionExist = false
 	} else if err != nil {
 		panic(err)
-	} else {
-		session = utils.FromGOB64(cacheValue)
 	}
-	return session, sessionExist
+	return cacheValue, sessionExist
 }
 
 func DeleteToken(token string)  {

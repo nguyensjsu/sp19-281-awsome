@@ -25,7 +25,8 @@ func AddUser(user models.User) bool {
 	return db.AddUser(models.User{
 		Email: user.Email,
 		Password: utils.GetPasswordHash(user.Password),
-		Role: user.Role})
+		Role: user.Role,
+		Name:user.Name})
 }
 
 func AddSession(user models.User) string {
@@ -36,6 +37,6 @@ func InvalidateSession(token string) {
 	db.DeleteToken(token)
 }
 
-func GetSession(token string) (models.Session,bool) {
-	return db.GetToken(token)
-}
+//func GetSession(token string) (models.Session,bool) {
+//	return db.GetToken(token)
+//}
