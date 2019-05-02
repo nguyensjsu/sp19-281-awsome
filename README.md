@@ -9,6 +9,7 @@
 
 ## Project Journal
 Project Journal available at following locations for **AWSome** project.
+
 [Week1 Journal](Project%20Journal/Week1.md)
 
 [Week2 Journal](Project%20Journal/Week2.md)
