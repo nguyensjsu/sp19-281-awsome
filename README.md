@@ -8,7 +8,15 @@
 - Dharma Dheeraj Chintala
 
 ## Project Journal
-[Link to Project Journal](https://github.com/nguyensjsu/sp19-281-awsome/blob/master/Project%20Journal.md)
+Project Journal available at following locations for **AWSome** project.
+
+[Week1 Journal](Project%20Journal/Week1.md)
+
+[Week2 Journal](Project%20Journal/Week2.md)
+
+[Week3 Journal](Project%20Journal/Week3.md)
+
+[Week4 Journal](Project%20Journal/Week4.md)
 
 ## Architecture:
 ### Microservices
