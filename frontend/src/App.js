@@ -5,8 +5,8 @@ import HomePage from "./components/Home/Home";
 import ApplicantHome from "./components/Home/ApplicantHome"
 import RecruiterHome from "./components/Home/RecruiterHome"
 import Network from "./components/Network/Network";
-import Profile from "./components/Profile/Profile";
-import UserJobs from "./components/UserJobs/UserJobs";
+import Profile from "./components/profile/profile";
+import UserJobs from "./components/UserJobs/postJob";
 
 function App() {
   return (
