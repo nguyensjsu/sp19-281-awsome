@@ -3,7 +3,7 @@ package main
 import (
 	"auth/db"
 	"auth/models"
-	userManager "auth/userManager"
+	"auth/user"
 	"auth/utils"
 	"encoding/json"
 	"fmt"
