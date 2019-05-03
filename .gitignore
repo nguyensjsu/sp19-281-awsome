@@ -39,3 +39,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 backend/services/user/goapi/src/.idea/workspace.xml
+bin/
+.terraform
