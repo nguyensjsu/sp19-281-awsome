@@ -41,3 +41,4 @@ yarn-error.log*
 backend/services/user/goapi/src/.idea/workspace.xml
 bin/
 .terraform
+*.backup
