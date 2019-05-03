@@ -1,8 +1,8 @@
 package db
 
 import (
-	"../config"
-	"../models"
+	"auth/config"
+	"auth/models"
 	"fmt"
 	"github.com/go-redis/redis"
 	uuid "github.com/satori/go.uuid"

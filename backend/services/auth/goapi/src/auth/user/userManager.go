@@ -1,9 +1,9 @@
-package user
+package userManager
 
 import (
-	"../db"
-	"../models"
-	"../utils"
+	"auth/db"
+	"auth/models"
+	"auth/utils"
 )
 
 func ValidateUser(user models.User) (bool, models.User) {
@@ -36,7 +36,3 @@ func AddSession(user models.User) string {
 func InvalidateSession(token string) {
 	db.DeleteToken(token)
 }
-
-//func GetSession(token string) (models.Session,bool) {
-//	return db.GetToken(token)
-//}

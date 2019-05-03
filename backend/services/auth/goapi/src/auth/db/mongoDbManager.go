@@ -1,8 +1,8 @@
 package db
 
 import (
-	"../config"
-	"../models"
+	"auth/config"
+	"auth/models"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
@@ -38,20 +38,8 @@ func ConfigMongoDB() {
 
 	fmt.Println("Connected to MongoDB!")
 
-	//defer client.Disconnect(ctx)
-
 	db = client.Database("authdb")
 
-	// create Time To Live index
-	//coll := db.Collection("active_sessions")
-	//opts := options.CreateIndexes().SetMaxTime(10 * time.Second)
-	//keys := bsonx.Doc({"createdAt": 1}, { expireAfterSeconds: 60 * 60})
-	//index := mongo.IndexModel{}
-	//index.Keys = keys
-	//_, err = coll.Indexes().CreateOne(context.Background(), index, opts)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
 }
 
 func AddUser(user models.User) bool {
@@ -78,37 +66,3 @@ func GetUserByEmail(email string) (models.User, bool) {
 	}
 	return user, userExist
 }
-
-//func AddToken(user models.User) string {
-//	newToken, _ := uuid.NewV4()
-//	coll := db.Collection("active_sessions")
-//	session := models.Session{
-//		CreatedAt: time.Now(),
-//		SessionId: newToken.String(),
-//		Email: user.Email,
-//		Role: user.Role }
-//	_, err := coll.InsertOne(context.Background(), session)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	return newToken.String()
-//}
-
-//func GetToken(token string) (models.Session, bool) {
-//	var session models.Session
-//	sessionExist := true
-//	coll := db.Collection("active_sessions")
-//	err := coll.FindOne(context.Background(), bson.M{"sessionId": token}).Decode(&session)
-//	if err != nil {
-//		sessionExist = false
-//	}
-//	return session, sessionExist
-//}
-//
-//func DeleteToken(token string)  {
-//	coll := db.Collection("active_sessions")
-//	_, err := coll.DeleteOne(context.Background(), bson.M{"sessionId": token})
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//}
