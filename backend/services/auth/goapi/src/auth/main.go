@@ -1,12 +1,12 @@
 package main
 
 import (
-	"./db"
-	"./models"
-	userManager "./user"
-	"./utils"
+	. "auth/db"
+	. "auth/models"
+	userManager . "auth/user"
+	. "auth/utils"
 	"encoding/json"
-	"fmt"
+	"fmte`
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
