@@ -1,12 +1,12 @@
 package main
 
 import (
-	. "auth/db"
-	. "auth/models"
-	userManager . "auth/user"
-	. "auth/utils"
+	"auth/db"
+	"auth/models"
+	userManager "auth/userManager"
+	"auth/utils"
 	"encoding/json"
-	"fmte`
+	"fmt"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
@@ -22,10 +22,12 @@ func SignUp(w http.ResponseWriter, r *http.Request)  {
 	var user models.User
 	// Get json body
 	err := json.NewDecoder(r.Body).Decode(&user)
+
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
+
 	if !userManager.AddUser(user) {
 		respondWithError(w, http.StatusBadRequest, "user exists")
 	} else {
