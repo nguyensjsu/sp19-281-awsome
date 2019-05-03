@@ -154,11 +154,11 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/ping", PingEndPoint).Methods("GET")
-	r.HandleFunc("/user", CreateUser).Methods("POST")
-	r.HandleFunc("/user", GetAllUsers).Methods("GET")
-	r.HandleFunc("/user/{id}", GetOneUser).Methods("GET")
-	r.HandleFunc("/user", UpdateUser).Methods("PUT")
-	r.HandleFunc("/user/{id}", DeleteUser).Methods("DELETE")
+	r.HandleFunc("/users", CreateUser).Methods("POST")
+	r.HandleFunc("/users", GetAllUsers).Methods("GET")
+	r.HandleFunc("/users/{id}", GetOneUser).Methods("GET")
+	r.HandleFunc("/users", UpdateUser).Methods("PUT")
+	r.HandleFunc("/users/{id}", DeleteUser).Methods("DELETE")
 	r.HandleFunc("/auth/login", TestLogin).Methods("POST")
 
 	if err := http.ListenAndServe(":9000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS", "DELETE"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
