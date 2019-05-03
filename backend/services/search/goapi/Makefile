@@ -6,10 +6,10 @@ clean:
 	go clean
 
 run:
-	go run src/app/$(app).go
+	go run src/search/$(app).go
 
 main:
-	go run src/app/main.go
+	go run src/search/main.go
 
 format:
 	go fmt search
