@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"gopkg.in/mgo.v2/bson"
-
 	//"gopkg.in/mgo.v2"
 	//"gopkg.in/mgo.v2/bson"
 	"log"
+    "os"
 	http "net/http"
 	. "user/models"
 	"github.com/gorilla/handlers"
@@ -145,8 +145,8 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 func init() {
-	dao.Database = "cmpe281"
-	dao.Server = "mongodb://cmpe281:cmpe281@192.168.99.100:27017"
+	dao.Database = os.Getenv("MONGO_DATABASE")
+	dao.Server = os.Getenv("MONGO_SERVER")
 
 	dao.Connect()
 }
