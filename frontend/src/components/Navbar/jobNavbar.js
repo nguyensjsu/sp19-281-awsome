@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown, FormGroup, FormControl } from 'react-bootstrap';
+//import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import "../../css/postJobNavbar.css";
-import { Redirect } from 'react-router-dom';
+//import { Redirect } from 'react-router-dom';
 
 
 
 class NavbarJobPost extends Component {
-    state = {}
+    //state = {}
     render() {
-        let redirectVar = null;
-        if (!localStorage.getItem("userToken")) {
-            redirectVar = <Redirect to="/home" />
-        }
+        // let redirectVar = null;
+        // if (!localStorage.getItem("userToken")) {
+        //     redirectVar = <Redirect to="/home" />
+        // }
         return (
             <div>
-                {redirectVar}
-                <Navbar inverse collapseOnSelect className='navbar-fixed-top navbarPostJob'>
+                {/* {redirectVar} */}
+                {/* <Navbar inverse collapseOnSelect className='navbar-fixed-top navbarPostJob'>
                     <Navbar.Header>
                         <Navbar.Brand>
                             <a href="/home"><img src="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y" ></img></a>
@@ -64,7 +67,7 @@ class NavbarJobPost extends Component {
 
                         </Nav>
                     </Navbar.Collapse>
-                </Navbar>
+                </Navbar> */}
 
             </div >
         );

@@ -72,18 +72,18 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 }
 
 //Testing Login
-func TestLogin(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	var login Login
+// func TestLogin(w http.ResponseWriter, r *http.Request) {
+// 	defer r.Body.Close()
+// 	var login Login
 
-	if err := json.NewDecoder(r.Body).Decode(&login); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	fmt.Print(login.Email)
-	var user =	 User {"test1","Avinav1","Tyagi1","recruiter"}
-	respondWithJson(w, http.StatusOK, user)
-}
+// 	if err := json.NewDecoder(r.Body).Decode(&login); err != nil {
+// 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+// 		return
+// 	}
+// 	fmt.Print(login.Email)
+// 	var user =	 User {"test1","Avinav1","Tyagi1","recruiter"}
+// 	respondWithJson(w, http.StatusOK, user)
+// }
 
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
@@ -108,7 +108,7 @@ func main() {
 	r.HandleFunc("/jobs", CreateJob).Methods("POST")
 	r.HandleFunc("/jobs", GetAllJobs).Methods("GET")
 	r.HandleFunc("/jobs/{id}", GetJobWithID).Methods("GET")
-	r.HandleFunc("/auth/login", TestLogin).Methods("POST")
+	//r.HandleFunc("/auth/login", TestLogin).Methods("POST")
 	
 	if err := http.ListenAndServe(":9000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(r)); err != nil {
 		log.Fatal(err)

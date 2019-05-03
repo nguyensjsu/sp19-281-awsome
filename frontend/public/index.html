@@ -2,6 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+  <script src="sweetalert2.min.js"></script>
+
+  <link rel="stylesheet" href="sweetalert2.min.css">
+  <!-- <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css"> -->
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -35,4 +52,41 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var navListItems = $('div.setup-panel div a'),
+        allWells = $('.setup-content'),
+        allNextBtn = $('.nextBtn');
+      allWells.hide();
+      navListItems.click(function (e) {
+        e.preventDefault();
+        var $target = $($(this).attr('href')),
+          $item = $(this);
+        if (!$item.hasClass('disabled')) {
+          navListItems.removeClass('btn-primary').addClass('btn-default');
+          $item.addClass('btn-primary');
+          allWells.hide();
+          $target.show();
+          $target.find('input:eq(0)').focus();
+        }
+      });
+      allNextBtn.click(function () {
+        var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+          curInputs = curStep.find("input[type='text'],input[type='url']"),
+          isValid = true;
+        $(".form-group").removeClass("has-error");
+        for (var i = 0; i < curInputs.length; i++) {
+          if (!curInputs[i].validity.valid) {
+            isValid = false;
+            $(curInputs[i]).closest(".form-group").addClass("has-error");
+          }
+        }
+        if (isValid)
+          nextStepWizard.removeAttr('disabled').trigger('click');
+      });
+      $('div.setup-panel div a.btn-primary').trigger('click');
+    });
+  </script>
 </html>

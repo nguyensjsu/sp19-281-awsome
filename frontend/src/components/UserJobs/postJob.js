@@ -3,11 +3,11 @@ import './postJob.css';
 import './jobDetails.css';
 import NavbarJobPost from "../Navbar/jobNavbar";
 import axios from 'axios';
-import { postJob } from "../../actions/jobActions";
-import { connect } from "react-redux";
+import {JOB_API} from "../constants/constants";
+//import { postJob } from "../../actions/jobActions";
+//import { connect } from "react-redux";
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
-//create the Owner Login Component
 class PostJob extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +29,8 @@ class PostJob extends Component {
       relevantExperience: '',
       educationLevel: '',
       country: '', region: '',
-      logo : "https://s3.us-east-2.amazonaws.com/user-images-linkedin2/logo+image.jpeg",
+      //logo : "https://s3.us-east-2.amazonaws.com/user-images-linkedin2/logo+image.jpeg",
+      logo : '',
       easyApply : '',
       click: [],
       country: '', region: ''
@@ -63,7 +64,7 @@ class PostJob extends Component {
   onButtonClick(e) {
     this.setState({ click:  e.target.value });
   }
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     const profileData = {
@@ -88,7 +89,10 @@ class PostJob extends Component {
       click: this.state.click
     };
     console.log(profileData);
-    this.props.postJob(profileData, this.props.history);
+    const result = await axios.post(`${JOB_API}/recruiter/postJob`, profileData);
+
+    //this.props.postJob(profileData, this.props.history);
+
   }
 
   handleOptionChange(e) {
@@ -138,8 +142,8 @@ class PostJob extends Component {
           <form onSubmit={this.onSubmit}>
 
             <div class="row setup-content" id="step-1">
-              <header>
-                <h1> Reach the quality candidates you can’t find anywhere else.</h1><br /><br />
+              <header class = "primaryHeader">
+                <h1 class="PrimaryHeading"> Reach the quality candidates you can’t find anywhere else.</h1><br /><br />
               </header>
               <div class="form1">
                 <div class="form-group">
@@ -389,7 +393,7 @@ class PostJob extends Component {
     )
   }
 }
-// export default PostJob;
-export default connect (null,{postJob})(PostJob);
+ export default PostJob;
+//export default connect (null,{postJob})(PostJob);
 
 

@@ -120,12 +120,22 @@
     opacity: 1 !important;
     filter: alpha(opacity=100) !important;
 }
-.h1, h1 {
+/* .h1, h1 {
     display: inline-block;
     text-align: center;
     color: rgba(255,255,255,.85);
     line-height: 1.25;
     margin-left: 20%;
+} */
+.PrimaryHeading{
+    display: inline-block;
+    text-align: center;
+    color: rgba(255,255,255,.85);
+    line-height: 1.25;
+    margin-left: 35%;
+}
+.primaryHeader{
+    background: #006097 no-repeat center center fixed;
 }
 .stepwizard-row:before {
     top: 14px;
