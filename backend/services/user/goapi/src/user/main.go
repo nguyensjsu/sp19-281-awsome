@@ -86,10 +86,10 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 func init() {
-	//dao.Database = "cmpe281"
-	//dao.Server = "mongodb://cmpe281:cmpe281@192.168.99.100:27017"
-	//
-	//dao.Connect()
+	dao.Database = os.Getenv("MONGO_DATABASE")
+	dao.Server = os.Getenv("MONGO_SERVER")
+
+	dao.Connect()
 }
 
 func main() {
