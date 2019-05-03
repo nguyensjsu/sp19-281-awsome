@@ -6,6 +6,7 @@ import (
 	//"gopkg.in/mgo.v2"
 	//"gopkg.in/mgo.v2/bson"
 	"log"
+	"os"
 	http "net/http"
 	. "users/models"
 	"github.com/gorilla/handlers"
