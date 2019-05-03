@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"../db"
-	"../models"
+	"auth/db"
+	"auth/models"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
