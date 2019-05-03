@@ -8,10 +8,10 @@ import (
 	"log"
 	"os"
 	http "net/http"
-	. "users/models"
+	. "user/models"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	. "users/DAO"
+	. "user/DAO"
 )
 
 
