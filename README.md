@@ -62,8 +62,6 @@ docker swarm join --token SWMTKN-1-4b9w5yrifkwqhs32zdsfg1ml3y12277qz1u1x24c5gpbt
 Run above command in worker node to join other nodes to cluster
 You can verify swarm cluster status using `docker info` and `docker node ls` command
 
-### CAP Principle: 
-
 ## Extra Credit - Terraform
 We have used Terraform to launch API gateway. Following is the output for `terraform apply`
 ```
