@@ -12,22 +12,7 @@ class Profile extends Component
         super(props);
 
         this.state = {
-            userid : '',
-            firstname : '',
-            lastname : '',
-            aboutme : '',
-            address : '',
-            address2 : '',
-            country : '',
-            state : '',
-            zip : '',
-            company : '',
-            gender : '',
-            school : '',
-            hometown : '',
-            languages : '',
-            selectedFile : [],
-            profilepic : ''
+            data : ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -36,22 +21,11 @@ class Profile extends Component
 
     componentDidMount()
     {
-        axios.get(`${USER_API}/user/`).then((response)=>{
+        var id = sessionStorage.getItem("user_id");
+        axios.get(`${USER_API}/user/${id}`).then((response)=>{
             if(response.data){
                 this.setState({
-                    // firstname : response.data.users.firstname,
-                    // lastname : response.data.users.lastname,
-                    // aboutme: response.data.users.aboutme,
-                    // address: response.data.users.address,
-                    // address2: response.data.users.address2,
-                    // country: response.data.users.country,
-                    // state: response.data.users.state,
-                    // zip: response.data.users.zip,
-                    // company: response.data.users.company,
-                    // gender: response.data.users.gender,
-                    // school: response.data.users.school,
-                    // hometown: response.data.users.hometown,
-                    // languages: response.data.users.languages
+                    data : response.data
                 })
                 //alert(response.data);
             }

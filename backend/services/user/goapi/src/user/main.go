@@ -51,7 +51,7 @@ func GetOneUser(w http.ResponseWriter, r *http.Request){
 	params := mux.Vars(r)
 	id := params["id"]
 	fmt.Print("Finding Id :" + id)
-	users,err := dao.FindOne(bson.ObjectIdHex(id))
+	users,err := dao.FindOne(id)
 
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, err.Error())

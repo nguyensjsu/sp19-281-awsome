@@ -106,21 +106,16 @@ class HomePage extends React.Component {
               axios.post(`${AUTH_API}/auth/login`, data).then((res) => {
                   console.log(res);
                   if (res.status >= 200 && res.status < 300) {
-                      sessionStorage.setItem("user_id", res.data.sub);
-                      sessionStorage.setItem("profile", res.data.profile);
+                      sessionStorage.setItem("profile", "applicant");
                       sessionStorage.setItem("user_token", res.data.token);
+                      let splitToken = res.data.token.split(".",3);
+                      let headers = splitToken[1]+"==";
+                      let token = btoa(headers);
                       this.setState({
                           loginemail: '',
                           loginpassword: ''
                       });
-                      if(res.data.profile == 'applicant')
-                      {
-                          this.props.history.push("/applicanthome");
-                      }
-                      if(res.data.profile == 'recruiter')
-                      {
-                          this.props.history.push("/recruiterhome");
-                      }
+                      this.props.history.push("/applicanthome");
                   }
               });
           }

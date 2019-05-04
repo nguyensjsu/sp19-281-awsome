@@ -19,7 +19,7 @@ function App() {
                     <Route path="/recruiterhome" component={RecruiterHome} />
                     <Route path="/mynetwork" component={Network} />
                     <Route path="/profile" component={Profile}/>
-                    <Route path="/jobshome" component={PostJob}/>
+                    <Route path="/postjobs" component={PostJob}/>
                 </div>
           </div>
       </BrowserRouter>

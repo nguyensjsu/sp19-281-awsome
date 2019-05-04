@@ -37,11 +37,11 @@ func (m *UserDatabase) FindAll() ([]User, error) {
 }
 
 // Find One users
-func (m *UserDatabase) FindOne(id bson.ObjectId) (User, error) {
+func (m *UserDatabase) FindOne(id string) (User, error) {
 	fmt.Print("Finding One User: ")
 	fmt.Print(id)
 	var users User
-	err := db.C(COLLECTION).Find(bson.M{"_id":id}).One(&users)
+	err := db.C(COLLECTION).Find(bson.M{"email":id}).One(&users)
 	return users, err
 }
 

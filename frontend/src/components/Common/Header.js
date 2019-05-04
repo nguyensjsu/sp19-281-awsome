@@ -334,28 +334,21 @@ class Header extends React.Component {
 									</Link>
 								</li>
 							<li>
-								{ (sessionStorage.getItem('profile') == 'applicant') && <Link to= "/jobshome">
+								<Link to= "/jobshome">
 										<div>
 											<i className="fa fa-briefcase header-icons"></i>
 										</div>
 										Jobs
 									</Link>
-								}
-                                { (sessionStorage.getItem('profile') == 'recruiter') && <Link to="/postedjobs">
+							</li>
+							<li>
+								<Link to="/postjobs">
                                     <div>
                                         <i className="fa fa-briefcase header-icons" />
                                     </div>
                                     Post Jobs
                                 </Link>
-                                }
-							</li>
-							<li>
-									<a href="#" title="">
-										<div>
-											<i className="fa fa-bell header-icons"></i>
-										</div>
-										Notifications
-									</a>
+
 							</li>
 							<li>
                                 <a href="#" title="">
