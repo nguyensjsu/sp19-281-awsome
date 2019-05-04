@@ -24,25 +24,21 @@ Project Journal available at following locations for **AWSome** project.
 ### Microservices
 * **Auth** 
 ```
+- /auth/ping
 - /auth/login
 - /auth/signup
 - /auth/logout
 ```
-* **Search**
-```
-- /search/jobs
-- /search/users
-```
 * **Users**
 ```
-- /ping -> "GET"
+- /users/ping -> "GET"
 - /users -> "POST"
 - /users -> "GET"
 - /users/{id} -> "GET"
 ```
 * **Jobs** 
 ```
-- /ping -> "GET"
+- /jobs/ping -> "GET"
 - /jobs  -> "POST"
 - /jobs -> "GET"
 - /job/{id} -> "GET"
