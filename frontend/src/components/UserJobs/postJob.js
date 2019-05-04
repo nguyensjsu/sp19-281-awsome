@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './postJob.css';
 import './jobDetails.css';
+import Header from "../Common/Header";
 import NavbarJobPost from "../Navbar/jobNavbar";
 import axios from 'axios';
 import {JOB_API} from "../constants/constants";
@@ -12,15 +13,15 @@ class PostJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      company: '',
-      jobTitle: '',
+      Company: '',
+      Title: '',
       jobCity: '',
       jobState: '',
-      jobFunction: '',
-      employmentType: '',
-      companyIndustry: '',
+      Function: '',
+      JobType: '',
+      Industry: '',
       seniorityLevel: '',
-      jobDescription: '',
+      Description: '',
       selectedOption: '',
       emailNotify: '',
       externalSite: '',
@@ -29,8 +30,8 @@ class PostJob extends Component {
       relevantExperience: '',
       educationLevel: '',
       country: '', region: '',
-      //logo : "https://s3.us-east-2.amazonaws.com/user-images-linkedin2/logo+image.jpeg",
-      logo : '',
+      //Logo : "https://s3.us-east-2.amazonaws.com/user-images-linkedin2/Logo+image.jpeg",
+      Logo : '',
       easyApply : '',
       click: [],
       country: '', region: ''
@@ -51,10 +52,10 @@ class PostJob extends Component {
     //let file = e.target.files[0];
     console.log("uploading profile photo...");
     //formData.append('profileimage', file);
-    const result = await axios.post(`http://localhost:3001/applicant/logoimage/`, file) 
+    const result = await axios.post(`http://localhost:3001/applicant/Logoimage/`, file) 
     console.log(result.data)
      this.setState({
-       logo : result.data
+       Logo : result.data
      })
 
 }
@@ -67,31 +68,33 @@ class PostJob extends Component {
   async onSubmit(e) {
     e.preventDefault();
 
-    const profileData = {
-      jobTitle: this.state.jobTitle,
-      company: this.state.company,
-      jobCity: this.state.jobCity,
-      jobState: this.state.jobState,
-      jobFunction: this.state.jobFunction,
-      employmentType: this.state.employmentType,
-      companyIndustry: this.state.companyIndustry,
-      seniorityLevel: this.state.seniorityLevel,
-      jobDescription: this.state.jobDescription,
-      selectedOption: this.state.selectedOption,
-      emailNotify: this.state.emailNotify,
-      externalSite: this.state.externalSite,
-      skills: this.state.skills,
-      hearAboutUs: this.state.hearAboutUs,
-      relevantExperience: this.state.relevantExperience,
-      educationLevel: this.state.educationLevel,
-      logo : this.state.logo,
-      easyApply : this.state.easyApply,
-      click: this.state.click
+    const jobData = {
+      Title: this.state.Title,
+      Company: this.state.Company,
+      // jobCity: this.state.jobCity,
+      // jobState: this.state.jobState,
+      Function: this.state.Function,
+      JobType: this.state.JobType,
+      Industry: this.state.Industry,
+      //seniorityLevel: this.state.seniorityLevel,
+      Description: this.state.Description,
+      // selectedOption: this.state.selectedOption,
+      // emailNotify: this.state.emailNotify,
+      // externalSite: this.state.externalSite,
+      // skills: this.state.skills,
+      // hearAboutUs: this.state.hearAboutUs,
+      // relevantExperience: this.state.relevantExperience,
+      // educationLevel: this.state.educationLevel,
+      Logo : this.state.Logo,
+      // easyApply : this.state.easyApply,
+      // click: this.state.click
     };
-    console.log(profileData);
-    const result = await axios.post(`${JOB_API}/recruiter/postJob`, profileData);
-
-    //this.props.postJob(profileData, this.props.history);
+    console.log(jobData);
+    const result = await axios.post(`${JOB_API}`, jobData);
+    if(result != null){
+      this.props.history.push("/listJobs");
+    }
+    //this.props.postJob(jobData, this.props.history);
 
   }
 
@@ -112,7 +115,7 @@ class PostJob extends Component {
 
     return (
       <div>
-        <NavbarJobPost />
+        <Header/>
         <br /><br />
         <br />
         <br />
@@ -147,10 +150,10 @@ class PostJob extends Component {
               </header>
               <div class="form1">
                 <div class="form-group">
-                  <input type="text" required="required" class="form-control" name="company" value={this.state.company} onChange={this.onChange} placeholder="Company" />
+                  <input type="text" required="required" class="form-control" name="Company" value={this.state.Company} onChange={this.onChange} placeholder="Company" />
                 </div>
                 <div class="form-group">
-                  <input type="text" required="required" class="form-control" name="jobTitle" value={this.state.jobTitle} onChange={this.onChange} placeholder="Job Title" />
+                  <input type="text" required="required" class="form-control" name="Title" value={this.state.Title} onChange={this.onChange} placeholder="Job Title" />
                 </div>
                 <div class="form-group">
                   <input type="text" required="required" class="form-control" name="jobCity" value={this.state.jobCity} onChange={this.onChange} placeholder="Job City" />
@@ -182,13 +185,13 @@ class PostJob extends Component {
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">Company *</label>
-                            <input maxlength="200" type="text" required="required" name="company" value={this.state.company} onChange={this.onChange} class="form-control" placeholder="Company" />
+                            <input maxlength="200" type="text" required="required" name="Company" value={this.state.Company} onChange={this.onChange} class="form-control" placeholder="Company" />
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">Job Title *</label>
-                            <input maxlength="200" type="text" required="required" name="jobTitle" value={this.state.jobTitle} onChange={this.onChange} class="form-control" placeholder="Job Title" />
+                            <input maxlength="200" type="text" required="required" name="Title" value={this.state.Title} onChange={this.onChange} class="form-control" placeholder="Job Title" />
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -202,7 +205,7 @@ class PostJob extends Component {
                         <div class="col-md-8">
                           <div class="form-group">
                             <label class="control-label">Job Function *</label>
-                            <input maxlength="200" type="text" required="required" class="form-control" name="jobFunction" value={this.state.jobFunction} onChange={this.onChange} placeholder="Job Function" />
+                            <input maxlength="200" type="text" required="required" class="form-control" name="Function" value={this.state.Function} onChange={this.onChange} placeholder="Job Function" />
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -210,7 +213,7 @@ class PostJob extends Component {
                             <label class="control-label">
                               Employment Type *
                           </label>
-                            <select class="form-control" name="employmentType" value={this.state.employmentType} onChange={this.onChange}>
+                            <select class="form-control" name="JobType" value={this.state.JobType} onChange={this.onChange}>
                               <option value="">Choose one...</option>
                               <option value="Full Time">Full Time</option>
                               <option value="Part Time">Part Time</option>
@@ -226,7 +229,7 @@ class PostJob extends Component {
                         <div class="col-md-8">
                           <div class="form-group">
                             <label class="control-label">Company Industry *</label>
-                            <input maxlength="200" type="text" required="required" class="form-control" name="companyIndustry" value={this.state.companyIndustry} onChange={this.onChange} placeholder="Industry" />
+                            <input maxlength="200" type="text" required="required" class="form-control" name="Industry" value={this.state.Industry} onChange={this.onChange} placeholder="Industry" />
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -250,7 +253,7 @@ class PostJob extends Component {
                         <div class="col-md-12">
                           <div class="form-group">
                             <label class="control-label">Job Description *</label>
-                            <textarea type="text" required="required" class="form-control" name="jobDescription" value={this.state.jobDescription} onChange={this.onChange} placeholder="Description" />
+                            <textarea type="text" required="required" class="form-control" name="Description" value={this.state.Description} onChange={this.onChange} placeholder="Description" />
                           </div>
                         </div>
                       </div>
@@ -272,7 +275,7 @@ class PostJob extends Component {
                                 <input type="radio" value="option2" checked={this.state.selectedOption === 'option2'} onChange={this.handleOptionChange} />
                                 Direct applicants to an external site to apply
                             </label>
-                              <input maxlength="200" type="text" class="form-control" name="externalSite" value={this.state.externalSite} onChange={this.onChange} placeholder="http://yourcompany.com/job123" />
+                              <input maxlength="200" type="text" class="form-control" name="externalSite" value={this.state.externalSite} onChange={this.onChange} placeholder="http://yourCompany.com/job123" />
                             </div>
                           </div>
                         </div>
@@ -298,7 +301,7 @@ class PostJob extends Component {
                         <label class="control-label">
                          Company Logo
                       </label>
-                      <input type="file" name="companyLogo"  id="file-input" onChange={this.onChangePhoto}/> 
+                      <input type="file" name="CompanyLogo"  id="file-input" onChange={this.onChangePhoto}/> 
                       </div>
                     </div>
                   </div>

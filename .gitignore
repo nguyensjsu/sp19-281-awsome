@@ -20,6 +20,7 @@ gopkg.in
 # dependencies
 frontend/node_modules
 frontend/.pnp
+frontend/.json
 .pnp.js
 
 # testing
