@@ -4,7 +4,8 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import fulllogo from "../Files/Images/full-logo.png";
 import "./Home.css";
-import {AUTH_API} from "../constants/constants"
+import {AUTH_API} from "../constants/constants";
+var jwtDecode = require("jwt-decode");
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -108,9 +109,9 @@ class HomePage extends React.Component {
                   if (res.status >= 200 && res.status < 300) {
                       sessionStorage.setItem("profile", "applicant");
                       sessionStorage.setItem("user_token", res.data.token);
-                      let splitToken = res.data.token.split(".",3);
-                      let headers = splitToken[1]+"==";
-                      let token = btoa(headers);
+                      var decoded = jwtDecode(res.data.token);
+                      const email = decoded.sub;
+                      sessionStorage.setItem("email", email);
                       this.setState({
                           loginemail: '',
                           loginpassword: ''

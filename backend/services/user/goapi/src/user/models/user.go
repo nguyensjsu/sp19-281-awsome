@@ -33,4 +33,5 @@ type Experience struct {
 type Login struct {
 	Email string        `bson:"email" json:"email"`
 	Password string	`bson:"password" json:"password"`
+	Token string `bson:"token" json:"token"`
 }
