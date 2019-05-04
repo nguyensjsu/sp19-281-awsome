@@ -104,7 +104,7 @@ class HomePage extends React.Component {
           console.log(data);
           try {
               axios.defaults.headers.post['Content-Type'] = 'application/json';
-              axios.post(`${AUTH_API}/auth/login`, data).then((res) => {
+              axios.post(`${AUTH_API}/login`, data).then((res) => {
                   console.log(res);
                   if (res.status >= 200 && res.status < 300) {
                       sessionStorage.setItem("profile", "applicant");
@@ -139,7 +139,8 @@ class HomePage extends React.Component {
         console.log(data);
         try {
             //axios.defaults.headers.post['Content-Type'] = 'application/json';
-            axios.post(`${AUTH_API}/auth/signup`, data).then( (res) => {
+            console.log(`${AUTH_API}/signup`);
+            axios.post(`${AUTH_API}/signup`, data).then( (res) => {
                 console.log("In login response is : " + JSON.stringify(res));
 
                 if (res.status >= 200 && res.status < 300) {

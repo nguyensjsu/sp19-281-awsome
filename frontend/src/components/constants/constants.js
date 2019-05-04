@@ -1,5 +1,5 @@
 
-export const AUTH_API = "http://localhost:9000"; //auth api to be given
+export const AUTH_API = "https://dxj7ycaazh.execute-api.us-east-1.amazonaws.com/prod/auth"; //auth api to be given
 
 export const USER_API = "https://dxj7ycaazh.execute-api.us-east-1.amazonaws.com/prod/users" //user api to be given
 

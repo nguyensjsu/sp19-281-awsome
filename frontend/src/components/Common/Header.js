@@ -400,6 +400,6 @@ class Header extends React.Component {
   }
 }
 
-export default withRouter(Header);
+export default  (Header);
   
   
