@@ -34,8 +34,8 @@ class Profile extends Component
     componentDidMount()
     {
         console.log("In Did Mount success");
-        var id = sessionStorage.getItem("user_id");
-        axios.get(`${USER_API}/5cccde7d01aaf20001d743e6`).then((response)=>{
+        var id = sessionStorage.getItem("email");
+        axios.get(`${USER_API}/${id}`).then((response)=>{
             console.log("In Get Start");
             if(response.data){
                 this.setState({id : response.data.id});
