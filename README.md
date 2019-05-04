@@ -18,6 +18,20 @@ Project Journal available at following locations for **AWSome** project.
 
 [Week4 Journal](Project%20Journal/Week4.md)
 
+## Description:
+
+**1. Microservices :** We have used Golang for the development of all the services, which doesn't rely on heavyweight threads but channels which are much more efficient in the concurrent world.
+
+**2. MongoDB:** For storing the users data and consistent fast retrieval, We chose mongo db. Since mongo db is a non-relational database, it is very convenient to store the data without strict schema definition.
+
+**3. JWT:** For maintaining sessions, we are using JWTs over the traditional cookie-based sessions. JWTs are as much secure and much more scalable since the server overhead is very less. The JWT signature and the client secret ensures that there was no tampering with the JWT. 
+
+**4. Redis:** For storing the JWT secret, We are using Redis as the in-memory caching layer. Since this will be invoked on every API call, there was a need for in-memory storage which is highly available. The Redis also provided in-built TTL which ensured that a session becomes invalid after 60 minutes.
+
+**5. Docker Swarm:** Deployed the all the services in AWS instances using docker swarm. This made it even more scalable.
+
+**6. MongoDB Sharding:** As the size of the data increase, data partitioning becomes very important. For setting this, we created two sharded cluster, two config servers, and one mongos for each service.
+
 ## Architecture:
 <img src="https://github.com/nguyensjsu/sp19-281-awsome/blob/master/cmpe281-architecture.png" width="100%">
 
