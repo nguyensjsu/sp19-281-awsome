@@ -51,6 +51,19 @@ Project Journal available at following locations for **AWSome** project.
 * **Scaling With Y-Axis** - MicroService Architecture comprising of 4 replicated services running independently.
 * **Scaling With Z-Axis** - The system uses sharded MongoDB databases for each service.
 
+## Docker Swarm Cluster:
+For replication of services we have used docker swarm as container orchestrater.
+You will need to initialize the swarm on the Manager node. Following command is used to initialize docker in swarm mode
+```
+docker swarm init --advertise-addr <PRIVATE_IP_ADDRESS>
+```
+You should see following in the output
+```
+docker swarm join --token SWMTKN-1-4b9w5yrifkwqhs32zdsfg1ml3y12277qz1u1x24c5gpbt8gg80-1e1r92ksw2mzohcj0ffymwsb3 <PRIVATE_IP_ADDRESS>:2377
+```
+Run above command in worker node to join other nodes to cluster
+You can verify swarm cluster status using `docker info` and `docker node ls` command
+
 ### CAP Principle: 
 
 ## Technology :
