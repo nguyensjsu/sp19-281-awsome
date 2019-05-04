@@ -66,6 +66,40 @@ You can verify swarm cluster status using `docker info` and `docker node ls` com
 
 ### CAP Principle: 
 
+## Extra Credit - Terraform
+We have used Terraform to launch API gateway. Following is the output for `terraform apply`
+```
+➜  Terraform git:(master) ✗ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+------------------------------------------------------------------------
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+Terraform will perform the following actions:
+  + aws_api_gateway_integration.integration
+      id:                                                <computed>
+      cache_namespace:                                   <computed>
+      connection_type:                                   "INTERNET"
+      http_method:                                       "ANY"
+      integration_http_method:                           "ANY"
+      passthrough_behavior:                              <computed>
+      request_parameters.%:                              "1"
+      request_parameters.integration.request.path.proxy: "method.request.path.proxy"
+      resource_id:                                       "${aws_api_gateway_resource.resource.id}"
+      rest_api_id:                                       "${aws_api_gateway_rest_api.api.id}"
+      timeout_milliseconds:                              "29000"
+      type:                                              "HTTP_PROXY"
+      uri:                                               "http://your.domain.com/{proxy}"
+  + aws_api_gateway_method.method
+      id:                                                <computed>
+      api_key_required:                                  "false"
+      authorization:                                     "NONE"
+      http_method:                                       "ANY"
+      request_parameters.%:                              "1"
+      request_parameters.method.request.path.proxy:      "1"
+```
 ## Technology :
 * **BackEnd** - GoLang 
 * **Cloud Services** - Amazon EC2, API Gateway, Network Load Balancer, Elastic Load Balancer
