@@ -20,7 +20,7 @@ Project Journal available at following locations for **AWSome** project.
 
 ## Description:
 
-**1. Microervices :** We have used Golang for the development of all the services, which doesn't rely on heavyweight threads but channels which are much more efficient in the concurrent world.
+**1. Microservices :** We have used Golang for the development of all the services, which doesn't rely on heavyweight threads but channels which are much more efficient in the concurrent world.
 
 **2. MongoDB:** For storing the users data and consistent fast retrieval, We chose mongo db. Since mongo db is a non-relational database, it is very convenient to store the data without strict schema definition.
 
