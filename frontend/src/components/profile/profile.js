@@ -12,7 +12,19 @@ class Profile extends Component
         super(props);
 
         this.state = {
-            data : ''
+            id : '',
+            email: '',
+            profile : '',
+            firstname: '',
+            lastname: '',
+            skills: '',
+            aboutme: '',
+            company : '',
+            role : '',
+            roledesc : '',
+            school : '',
+            program : '',
+            progdesc : ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,10 +36,19 @@ class Profile extends Component
         var id = sessionStorage.getItem("user_id");
         axios.get(`${USER_API}/user/${id}`).then((response)=>{
             if(response.data){
-                this.setState({
-                    data : response.data
-                })
-                //alert(response.data);
+                this.setState({id : response.data.id});
+                this.setState({email : response.data.email});
+                this.setState({profile : response.data.profile});
+                this.setState({firstname : response.data.firstname});
+                this.setState({lastname : response.data.lastname});
+                this.setState({skills : response.data.skills});
+                this.setState({aboutme : response.data.aboutme});
+                this.setState({company : response.data.experience.company});
+                this.setState({role : response.data.experience.role});
+                this.setState({roledesc : response.data.experience.roledesc});
+                this.setState({school : response.data.education.school});
+                this.setState({program : response.data.education.program});
+                this.setState({progdesc : response.data.education.progdesc});
             }
         });
 
@@ -38,20 +59,23 @@ class Profile extends Component
         e.preventDefault();
 
         const profiledata = {
-            userid : this.state.userid,
-            firstname : this.state.firstname,
-            lastname : this.state.lastname,
+            id : this.state.id,
+            email: this.state.email,
+            profile : this.state.profile,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            skills: this.state.skills,
             aboutme: this.state.aboutme,
-            address: this.state.address,
-            address2: this.state.address2,
-            country: this.state.country,
-            state: this.state.state,
-            zip: this.state.zip,
-            company: this.state.company,
-            gender: this.state.gender,
-            school: this.state.school,
-            hometown: this.state.hometown,
-            languages: this.state.languages,
+            experience: {
+                company : this.state.company,
+                role: this.state.role,
+                desc : this.state.roledesc
+            },
+            education: {
+                school: this.state.school,
+                program: this.state.program,
+                desc: this.state.progdesc
+            }
         }
 
 
@@ -96,10 +120,7 @@ class Profile extends Component
                                             <div className="row">
                                                 <div className="p-3 col-md-8">
                                                     <div className="blockquote mb-0">
-                                                        <p>"I throw myself down among the tall grass by the trickling
-                                                            stream; and, as I lie close to the earth, a thousand unknown
-                                                            plants are noticed by me: when I hear the buzz of the little
-                                                            world among the stalks."</p>
+                                                        <p>"Here comes the learning tag"</p>
                                                         <div className="blockquote-footer">
                                                             <b>J. W. Goethe</b>, CEO at Werther Inc.
                                                         </div>
@@ -144,93 +165,68 @@ class Profile extends Component
                                             </div>
 
                                             <div className="mb-3">
-                                                <label htmlFor="address">Address</label>
-                                                <input type="text" className="form-control" name="address" placeholder="1234 Main St" required="" onChange={this.handleChange} value={this.state.address} />
+                                                <label htmlFor="address">Skills</label>
+                                                <input type="text" className="form-control" name="skills" placeholder="My Skills" required="" onChange={this.handleChange} value={this.state.skills} />
                                                 <div className="invalid-feedback">
-                                                    Please enter your shipping address.
+                                                    Please enter your skills.
                                                 </div>
                                             </div>
 
                                             <div className="mb-3">
-                                                <label htmlFor="address2">Address 2 <span className="text-muted">(Optional)</span></label>
-                                                <input type="text" className="form-control" name="address2" placeholder="Apartment or suite" onChange={this.handleChange} value={this.state.address2} />
+                                                <label htmlFor="address2">Experience <span className="text-muted">(Optional)</span></label>
                                             </div>
 
                                             <div className="row">
                                                 <div className="col-md-5 mb-3">
-                                                    <label htmlFor="country">Country</label>
-                                                    <select className="custom-select d-block w-100" name="country" required="" onChange={this.handleChange} value={this.state.country} >
-                                                        <option value="">Choose...</option>
-                                                        <option value="UnitedState">United States</option>
-                                                    </select>
-                                                    <div className="invalid-feedback">
-                                                        Please select a valid country.
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4 mb-3">
-                                                    <label htmlFor="state">State</label>
-                                                    <select className="custom-select d-block w-100" name="state" required="" onChange={this.handleChange} value={this.state.state} >
-                                                        <option value="">Choose...</option>
-                                                        <option value="California">California</option>
-                                                    </select>
-                                                    <div className="invalid-feedback">
-                                                        Please provide a valid state.
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                    <label htmlFor="zip">Zip</label>
-                                                    <input type="text" className="form-control" name="zip" placeholder="" required="" onChange={this.handleChange} value={this.state.zip} />
-                                                    <div className="invalid-feedback">
-                                                        Zip code required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-md-5 mb-5">
                                                     <label htmlFor="zip">Company</label>
                                                     <input type="text" className="form-control" name="company" placeholder="Company" required="" onChange={this.handleChange} value={this.state.company} />
                                                     <div className="invalid-feedback">
                                                         company required.
                                                     </div>
                                                 </div>
-                                                <div className="col-md-4 mb-3">
-                                                    <label htmlFor="state">Gender</label>
-                                                    <select className="custom-select d-block w-100" name="gender" required="" onChange={this.handleChange} value={this.state.gender} >
-                                                        <option value="">Choose...</option>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="No">I Don't want to disclose my Identity</option>
-                                                    </select>
+                                                <div className="col-md-5 mb-3">
+                                                    <label htmlFor="zip">Role</label>
+                                                    <input type="text" className="form-control" name="role" placeholder="Role" required="" onChange={this.handleChange} value={this.state.role} />
                                                     <div className="invalid-feedback">
-                                                        Please provide a valid state.
+                                                        Role required.
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className="col-8 mb-5">
+                                                <label htmlFor="address">Role Description</label>
+                                                <input type="text" className="form-control" name="roledesc" placeholder="Role Description" required="" onChange={this.handleChange} value={this.state.roledesc} />
+                                                <div className="invalid-feedback">
+                                                    Please enter your Role Description.
+                                                </div>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label htmlFor="address2">Education <span className="text-muted">(Optional)</span></label>
+                                            </div>
+
                                             <div className="row">
-                                                <div className="col-md-5 mb-5">
+                                                <div className="col-md-5 mb-3">
                                                     <label htmlFor="zip">School</label>
-                                                    <input type="text" className="form-control" name="school" placeholder="School" required="" onChange={this.handleChange} value={this.state.school}/>
+                                                    <input type="text" className="form-control" name="school" placeholder="CompanSchooly" required="" onChange={this.handleChange} value={this.state.school} />
                                                     <div className="invalid-feedback">
                                                         School required.
                                                     </div>
                                                 </div>
-
-                                                <div className="col-md-5 mb-5">
-                                                    <label htmlFor="zip">HomeTown</label>
-                                                    <input type="text" className="form-control" name="hometown" placeholder="Hometown" required="" onChange={this.handleChange} value={this.state.hometown} />
+                                                <div className="col-md-5 mb-3">
+                                                    <label htmlFor="zip">Program</label>
+                                                    <input type="text" className="form-control" name="program" placeholder="Program" required="" onChange={this.handleChange} value={this.state.program} />
                                                     <div className="invalid-feedback">
-                                                        Hometown required.
+                                                        Program required.
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-8 mb-5">
-                                                <label htmlFor="zip">Languages</label>
-                                                <input type="text" className="form-control" name="languages" placeholder="Languages" required="" onChange={this.handleChange} value={this.state.languages} />
+                                            <div className="col-8 mb-3">
+                                                <label htmlFor="address">Program Description</label>
+                                                <input type="text" className="form-control" name="progdesc" placeholder="Program Description" required="" onChange={this.handleChange} value={this.state.progdesc} />
                                                 <div className="invalid-feedback">
-                                                    Languages required.
+                                                    Please enter your Program Description.
                                                 </div>
                                             </div>
-
 
                                             <hr className="mb-4" />
                                             <button className="btn btn-primary btn-lg btn-block" type="submit" onClick={this.submit}>Save Profile</button>
