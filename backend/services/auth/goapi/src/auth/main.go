@@ -39,6 +39,15 @@ func SignUp(w http.ResponseWriter, r *http.Request)  {
 		// Details
 		signupResponse.Details = models.UserDetails{}
 		signupResponse.Details.Name = user.Name
+
+		payLoad := models.CreateUserRequest{}
+		payLoad.Email = user.Email
+		payLoad.First = user.Name.First
+		payLoad.Last = user.Name.Last
+		jsonResponse, _ := json.Marshal(payLoad)
+		fmt.Println(string(jsonResponse))
+
+		//_, _ = http.Post("localhost:9001/user", "application/json", jsonData)
 		respondWithJson(w, http.StatusOK, signupResponse)
 	}
 }
@@ -91,7 +100,7 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
 	response, _ := json.Marshal(payload)
-	fmt.Println(string(response))
+	//fmt.Println(string(response))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	_, _ = w.Write(response)

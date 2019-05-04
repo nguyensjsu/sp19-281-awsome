@@ -15,11 +15,16 @@ func CreateJWT(user models.User) string {
 
 	// Create JWT token
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
-	secretKey := db.AddToken(user)
+	secretKey, tokenExist := db.GetToken(user.Email)
+	if !tokenExist {
+		secretKey = db.AddToken(user)
+	}
 	// claims
 	claims := make(jwt.MapClaims)
 	claims["sub"] = user.Email
 	claims["role"] = user.Role
+	claims["firstname"] = user.Name.First
+	claims["lastname"] = user.Name.Last
 	// Expire in 1 hour
 	claims["exp"] = time.Now().Add(time.Minute * 60).Unix()
 

@@ -33,6 +33,12 @@ type LoginResponse struct {
 }
 
 type Token struct {
-	Email string	`bson:"sub" json:"sub"`
-	Role string			`bson:"role" json:"role"`
+	Email string `bson:"sub" json:"sub"`
+	Role  string `bson:"role" json:"role"`
+}
+
+type CreateUserRequest struct {
+	Email string `bson:"email" json:"email"`
+	First string `bson:"first" json:"first"`
+	Last string `bson:"last" json:"last"`
 }
