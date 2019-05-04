@@ -125,9 +125,10 @@ func TestLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Print(login.Email)
 
-	var user User
+	var user Login
 	user.Email = login.Email
-	user.Profile = "applicant"
+	user.Password = "applicant"
+	user.Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTY5Mjk4OTUsInJvbGUiOiJhcHBsaWNhbnQiLCJzdWIiOiJuaWtpdGFAZ21haWwuY29tIn0.coeMiWf0MMSJPJ72z8Ik34lSD5MpYJR2HJ1xpLEOKdQ"
 	respondWithJson(w, http.StatusOK, user)
 }
 
