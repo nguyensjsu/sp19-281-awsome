@@ -29,3 +29,11 @@
   Scaling with X-axis : Building the load balanced replica set of 3 application servers for each microservice.\
   Scaling with Y-axis : Application is splitted in 4 Microservices \
   Scaling with Z-axis : Going with data sharding across muliple availability zones. 
+
+## WEEK 4
+* Each team member started working on integrating their services.
+* Front End Integration of Services to the go API's and check Response and Request Payload.
+* Configuring Micro service Instances, Database Instances and API Gateway.
+* Finalize Go API and Buildi the Docker images and deploy it to docker hub.
+* Run the Docker containers in respective EC2 instances and link them to the mongo Cluster.
+* Deploying Frontend in Heroku and changing the Respective constant URL's.
