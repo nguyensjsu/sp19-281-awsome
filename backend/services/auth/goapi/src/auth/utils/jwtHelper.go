@@ -11,14 +11,16 @@ import (
 	"time"
 )
 
+var secret = "my-cmpe-281-secret"
+
 func CreateJWT(user models.User) string {
 
 	// Create JWT token
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
-	secretKey, tokenExist := db.GetToken(user.Email)
-	if !tokenExist {
-		secretKey = db.AddToken(user)
-	}
+	//secretKey, tokenExist := db.GetToken(user.Email)
+	//if !tokenExist {
+	//	secretKey = db.AddToken(user)
+	//}
 	// claims
 	claims := make(jwt.MapClaims)
 	claims["sub"] = user.Email
@@ -29,7 +31,7 @@ func CreateJWT(user models.User) string {
 	claims["exp"] = time.Now().Add(time.Minute * 60).Unix()
 
 	token.Claims = claims
-	tokenString, err := token.SignedString([]byte(secretKey))
+	tokenString, err := token.SignedString([]byte(secret))
 
 	if err != nil {
 		panic(err)
@@ -45,10 +47,10 @@ func ValidateJWT(inputJWT string) bool {
 	if len(splitToken) <= 1 {
 		return false
 	}
-	valid, secret := getClientSecretKey(splitToken[1])
-	if !valid {
-		return false
-	}
+	//valid, secret := getClientSecretKey(splitToken[1])
+	//if !valid {
+	//	return false
+	//}
 	token, err := jwt.Parse(splitToken[1], func(token *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil
 	})
@@ -82,9 +84,9 @@ func getParsedSubject(jwt string) (bool, models.Token) {
 		headers := splitToken[1]+"=="
 		decodedHeader, err := base64.StdEncoding.DecodeString(headers)
 		fmt.Println(string(decodedHeader))
-		//if err != nil {
-		//	return false, token
-		//}
+		if err != nil {
+			return false, token
+		}
 		err = json.Unmarshal(decodedHeader, &token)
 		if err != nil {
 			return false, token
