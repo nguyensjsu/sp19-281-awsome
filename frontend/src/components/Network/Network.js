@@ -123,7 +123,7 @@ class Network extends Component
                                     <br></br>
                                     <div className="container">
                                         <div className="row" >
-                                            <div className="col-md-8" >
+                                            <div className="col-md-3" >
 
                                             </div>
                                             <div className="col-md-2" ></div>
@@ -131,7 +131,7 @@ class Network extends Component
                                             <div className="col-md-2" ></div>
                                         </div>
                                         <div className="row">
-                                            <div className="col-md-8" >
+                                            <div className="col-md-3" >
                                                 <div className="card searchresultscards1">
                                                     <div className="card-body">
                                                         <h4 className="fontsHeading">All Users</h4>
