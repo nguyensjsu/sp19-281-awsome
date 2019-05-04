@@ -19,6 +19,8 @@ Project Journal available at following locations for **AWSome** project.
 [Week4 Journal](Project%20Journal/Week4.md)
 
 ## Architecture:
+<img src="https://github.com/nguyensjsu/sp19-281-awsome/blob/master/cmpe281-architecture.png" width="100%">
+
 ### Microservices
 * **Auth** 
 ```
