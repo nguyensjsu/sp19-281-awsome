@@ -33,8 +33,10 @@ class Profile extends Component
 
     componentDidMount()
     {
+        console.log("In Did Mount success");
         var id = sessionStorage.getItem("user_id");
-        axios.get(`${USER_API}/user/${id}`).then((response)=>{
+        axios.get(`${USER_API}/5cccde7d01aaf20001d743e6`).then((response)=>{
+            console.log("In Get Start");
             if(response.data){
                 this.setState({id : response.data.id});
                 this.setState({email : response.data.email});
@@ -45,11 +47,13 @@ class Profile extends Component
                 this.setState({aboutme : response.data.aboutme});
                 this.setState({company : response.data.experience.company});
                 this.setState({role : response.data.experience.role});
-                this.setState({roledesc : response.data.experience.roledesc});
+                this.setState({roledesc : response.data.experience.desc});
                 this.setState({school : response.data.education.school});
                 this.setState({program : response.data.education.program});
-                this.setState({progdesc : response.data.education.progdesc});
+                this.setState({progdesc : response.data.education.desc});
+                console.log("In Get success");
             }
+            console.log("In Get Failure");
         });
 
     }
@@ -74,15 +78,15 @@ class Profile extends Component
             education: {
                 school: this.state.school,
                 program: this.state.program,
-                desc: this.state.progdesc
+                desc : this.state.progdesc
             }
         }
 
 
-        console.log(JSON.stringify(profiledata));
-        axios.put(`${USER_API}/user/`, profiledata)
+        console.log("data sending:" + JSON.stringify(profiledata));
+        axios.put(`${USER_API}/`, profiledata)
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 202) {
                     alert('Profile update successfully');
                     this.componentDidMount();
                 }
