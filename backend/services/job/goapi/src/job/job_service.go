@@ -98,7 +98,7 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 func init() {
 	dao.Database = os.Getenv("MONGO_DATABASE")
 	dao.Server = os.Getenv("MONGO_SERVER")
-
+	
 	dao.Connect()
 }
 
