@@ -1,6 +1,6 @@
 ## WEEK 4
 * Each team member started working on integrating their services.
-* Front End Integration of Services.
-* Implemented API's for posting a job and fetching the list of all job **(/jobs - GET and POST)** in Jobs service.
-* Implemented API's for creating user and fetching all users **(/create/user ,/getUsers)** in Users Service.
-* Discussed on the Data store options for the Application. Decided to go with MongoDB and Redis for cache.
+* Front End Integration of Services to the go API's and check Response and Request Payload.
+* Configuring Micro service Instances, Database Instances and API Gateway.
+* Finalize Go API and Buildi the Docker images and deploy it to docker hub.
+* Run the Docker containers in respective EC2 instances and link them to the mongo Cluster.
