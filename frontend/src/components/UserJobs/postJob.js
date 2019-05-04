@@ -5,6 +5,7 @@ import Header from "../Common/Header";
 import NavbarJobPost from "../Navbar/jobNavbar";
 import axios from 'axios';
 import {JOB_API} from "../constants/constants";
+import swal from "sweetalert2";
 //import { postJob } from "../../actions/jobActions";
 //import { connect } from "react-redux";
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -93,6 +94,14 @@ class PostJob extends Component {
     const result = await axios.post(`${JOB_API}`, jobData);
     if(result != null){
       this.props.history.push("/listJobs");
+    }
+    if (result.status === 200) {
+      swal({
+        title: "Success!",
+        text: "Job Saved",
+        type: "success",
+        confirmButtonText: "OK"
+      });
     }
     //this.props.postJob(jobData, this.props.history);
 
