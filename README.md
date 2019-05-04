@@ -45,9 +45,11 @@ Project Journal available at following locations for **AWSome** project.
 ```
 ## Design Principles:
 ### AKF Scaling Cube
-* **Scaling With X-Axis** - Horizontal Scaling using ELBs and multiple servers for each service.
-* **Scaling With Y-Axis** - MicroService Architecture comprising of 4 replicated services running independently.
-* **Scaling With Z-Axis** - The system uses sharded MongoDB databases for each service.
+* **Scaling With X-Axis** - For horizontal scaling we have created a replica set of 3 applicaton servers.Each Application servers is runnning on Amazon EC2 instances using docker. 
+
+* **Scaling With Y-Axis** - We are achieving scaling across Y axix by decomposing the code base into 4 indepedent microservices. Each microservice is running on docker swarm cluster.
+
+* **Scaling With Z-Axis** - We are using Mongo DB sharded cluster for /jobs and /user services. Sharded cluster consist of 2 config serviers and 2 shard servers and 1 mongos query router.
 
 ## Docker Swarm Cluster:
 For replication of services we have used docker swarm as container orchestrater.
