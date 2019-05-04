@@ -8,6 +8,7 @@ import Network from "./components/Network/Network";
 import Profile from "./components/profile/profile";
 import PostJob from "./components/UserJobs/postJob";
 import ListJobs from './components/UserJobs/listJobs';
+import JobDetails from './components/UserJobs/jobDetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/profile" component={Profile}/>
                     <Route path="/postjobs" component={PostJob}/>
                     <Route path="/listJobs" component={ListJobs}/>
+                    <Route path="/jobDetails/:id" component={JobDetails}/>
                 </div>
           </div>
       </BrowserRouter>

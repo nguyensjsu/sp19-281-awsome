@@ -6,14 +6,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-    "os"
+	"os"
+	"gopkg.in/mgo.v2/bson"
 	http "net/http"
 	. "job/models"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	. "job/DAO"
 )
-
 
 //Test Status of the API
 func PingEndPoint(w http.ResponseWriter, r *http.Request) {
@@ -55,6 +55,7 @@ func GetJobWithID(w http.ResponseWriter, r *http.Request){
 func CreateJob(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var job Job
+	job.ID = bson.NewObjectId()
 	if err := json.NewDecoder(r.Body).Decode(&job); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
@@ -98,7 +99,8 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 func init() {
 	dao.Database = os.Getenv("MONGO_DATABASE")
 	dao.Server = os.Getenv("MONGO_SERVER")
-	
+	// dao.Database = "cmpe281"
+	// dao.Server = "mongodb://cmpe281:cmpe281@3.89.47.220:27017"
 	dao.Connect()
 }
 

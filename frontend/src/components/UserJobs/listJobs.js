@@ -45,7 +45,8 @@ class ListJobs extends Component {
             var details = this.state.ListJobs.map((value, i) => {
                 return (
                     <div>
-                        <h4><strong>{value.title}</strong>
+                        {/* <h4><strong>{value.title}</strong> */}
+                        <h4><strong><a href={'https://cmpe281-awsome.herokuapp.com/jobDetails/' + value.id} title={value.headline}>{value.title}</a></strong>
                             {/* <button tabindex="1" onClick={this.onUnsave.bind(this, value.jobId)} className="job-page-job-unsave"><span class="glyphicon glyphicon-bookmark"></span></button> */}
                             <button tabindex="1" onClick={this.onUnsave.bind(this, value.title)} className="job-page-job-unsave"><span class="glyphicon glyphicon-bookmark"></span></button>
                         </h4>
