@@ -65,6 +65,11 @@ Project Journal available at following locations for **AWSome** project.
 
 * **Scaling With Z-Axis** - We are using Mongo DB sharded cluster for /jobs and /user services. Sharded cluster consist of 2 config serviers and 2 shard servers and 1 mongos query router.
 
+## Network Partition Test:
+
+<img src="https://github.com/nguyensjsu/sp19-281-awsome/blob/master/dockerswarm_partioning.png" width="100%">
+
+
 ## Docker Swarm Cluster:
 For replication of services we have used docker swarm as container orchestrater.
 You will need to initialize the swarm on the Manager node. Following command is used to initialize docker in swarm mode
