@@ -4,3 +4,4 @@
 * Configuring Micro service Instances, Database Instances and API Gateway.
 * Finalize Go API and Buildi the Docker images and deploy it to docker hub.
 * Run the Docker containers in respective EC2 instances and link them to the mongo Cluster.
+* Deploying Frontend in Heroku and changing the Respective constant URL's.
